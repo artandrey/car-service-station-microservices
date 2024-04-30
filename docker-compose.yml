@@ -1,0 +1,30 @@
+version: '3.8'
+
+services:
+  management_app:
+    build: ./management_service/
+    container_name: management_app
+    ports:
+      - "8080:8080"
+    depends_on:
+      - management_postgres
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:postgresql://management_postgres:5432/public
+      SPRING_DATASOURCE_USERNAME: root
+      SPRING_DATASOURCE_PASSWORD: 123456
+  management_postgres:
+    image: postgres:latest
+    container_name: management_postgres
+    environment:
+      POSTGRES_USER: root
+      POSTGRES_PASSWORD: 123456
+      POSTGRES_DB: public
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres-data:/var/lib/postgresql/data
+
+  
+
+volumes:
+  postgres-data:
