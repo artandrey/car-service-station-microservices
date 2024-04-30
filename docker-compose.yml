@@ -1,6 +1,41 @@
 version: '3.8'
 
 services:
+  discovery-server:
+    build: ./discovery_server/
+    container_name: discovery-server
+    ports:
+      - "8081:8081"
+      - "127.0.0.1:3000:8081"
+    environment:
+      SERVER_PORT: 8081
+      eureka.client.serviceUrl.defaultZone: 'http://discovery-server:8081/eureka/'
+      eureka.instance.hostname: discovery-server
+    healthcheck:
+      test: curl --fail http://discovery-server:8081 || exit 1
+      interval: 1s
+      timeout: 3s
+      retries: 30
+
+
+  api_gateway:
+    build: ./api_gateway/
+    container_name: api_gateway
+    depends_on:
+      discovery-server:
+        condition:
+          service_healthy
+    links:
+      - discovery-server
+    ports:
+      - "8082:8082"
+    environment:
+      SERVER_PORT: 8082
+      eureka.client.serviceUrl.defaultZone: 'http://discovery-server:8081/eureka/'
+
+    
+
+
   management_app:
     build: ./management_service/
     container_name: management_app
@@ -8,6 +43,7 @@ services:
       - "8080:8080"
     depends_on:
       - management_postgres
+      - discovery-server
     environment:
       SPRING_DATASOURCE_URL: jdbc:postgresql://management_postgres:5432/public
       SPRING_DATASOURCE_USERNAME: root
@@ -16,6 +52,7 @@ services:
     image: postgres:latest
     container_name: management_postgres
     environment:
+      SERVER_PORT: 8080
       POSTGRES_USER: root
       POSTGRES_PASSWORD: 123456
       POSTGRES_DB: public
@@ -28,3 +65,4 @@ services:
 
 volumes:
   postgres-data:
+
