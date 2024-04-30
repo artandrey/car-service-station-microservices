@@ -1,13 +1,14 @@
-package com.example.apigateway;
+package main.java.com.example.discovery_server;
+
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication
-public class ApiGatewayApplication {
+public class DiscoveryServerApplication {
 
 	public static void main(String[] args) {
-		SpringApplication.run(ApiGatewayApplication.class, args);
+		SpringApplication.run(DiscoveryServerApplication.class, args);
 	}
 
 }
