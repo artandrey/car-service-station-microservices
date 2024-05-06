@@ -5,7 +5,7 @@ import lombok.Data;
 
 @Data
 public class CreateWorkerPositionRequestDto {
-    @NotBlank(message = "Title is required")
+    @NotBlank
     private String title;
 
     private String description;

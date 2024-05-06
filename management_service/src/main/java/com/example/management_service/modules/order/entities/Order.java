@@ -1,7 +1,6 @@
 package com.example.management_service.modules.order.entities;
 
 import com.example.management_service.modules.car.entities.Car;
-import com.example.management_service.modules.order.entities.order_task.OrderTask;
 import com.example.management_service.shared.entities.BaseEntity;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -41,4 +40,8 @@ public class Order extends BaseEntity {
 
     @Column(name = "description")
     private String description;
+
+    @Enumerated(EnumType.STRING)
+    @Column(name = "order_status")
+    private CompletionStatus orderStatus;
 }

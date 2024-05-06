@@ -1,21 +1,19 @@
 package com.example.management_service.modules.user.services.worker_position.implementation;
 
-import java.util.List;
-
-import org.springframework.stereotype.Service;
-
 import com.example.management_service.modules.user.entities.WorkerPosition;
 import com.example.management_service.modules.user.exceptions.WorkerPositionNotFoundException;
+import com.example.management_service.modules.user.mappers.WorkerPositionMapper;
 import com.example.management_service.modules.user.repository.WorkerPositionRepository;
 import com.example.management_service.modules.user.services.worker_position.IWorkerPositionService;
 
+import org.springframework.stereotype.Service;
+
+import java.util.List;
+
 @Service
 public class WorkerPositionService implements IWorkerPositionService {
-    private final WorkerPositionRepository workerPositionRepository;
-
-    public WorkerPositionService(WorkerPositionRepository workerPositionRepository) {
-        this.workerPositionRepository = workerPositionRepository;
-    }
+    private WorkerPositionRepository workerPositionRepository;
+    private WorkerPositionMapper workerPositionMapper;
 
     @Override
     public List<WorkerPosition> getAllWorkerPositions() {
@@ -35,11 +33,11 @@ public class WorkerPositionService implements IWorkerPositionService {
 
     @Override
     public WorkerPosition updateWorkerPosition(Long workerPositionId, WorkerPosition workerPosition) {
-        if (!workerPositionRepository.existsById(workerPositionId)) {
-            throw new WorkerPositionNotFoundException(workerPositionId);
-        }
-        workerPosition.setId(workerPositionId);
-        return workerPositionRepository.save(workerPosition);
+
+        WorkerPosition workerPositionToUpdate = getWorkerPositionById(workerPositionId);
+
+        return workerPositionRepository
+                .save(workerPositionMapper.updateFrom(workerPosition, workerPositionToUpdate));
     }
 
     @Override

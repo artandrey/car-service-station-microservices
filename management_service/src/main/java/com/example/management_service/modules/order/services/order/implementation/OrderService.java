@@ -1,9 +1,10 @@
-package com.example.management_service.modules.order.services.implementation;
+package com.example.management_service.modules.order.services.order.implementation;
 
 import com.example.management_service.modules.order.entities.Order;
 import com.example.management_service.modules.order.exceptions.OrderNotFoundException;
 import com.example.management_service.modules.order.repository.OrderRepository;
-import com.example.management_service.modules.order.services.IOrderService;
+import com.example.management_service.modules.order.services.order.IOrderService;
+
 import org.springframework.stereotype.Service;
 
 import java.util.List;

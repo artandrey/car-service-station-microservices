@@ -1,17 +1,17 @@
 package com.example.management_service.modules.user.entities;
 
-import java.util.Date;
-
 import com.example.management_service.shared.entities.BaseEntity;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.EqualsAndHashCode;
+import lombok.NoArgsConstructor;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.EqualsAndHashCode;
-import lombok.NoArgsConstructor;
+
+import java.util.Date;
 
 @Entity
 @AllArgsConstructor
@@ -35,5 +35,4 @@ public class WorkerProfile extends BaseEntity {
 
     @Column(name = "salary")
     private double salary;
-
 }

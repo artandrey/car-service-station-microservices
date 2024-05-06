@@ -1,25 +1,16 @@
-package com.example.management_service.modules.order.entities.order_task;
-
-import java.util.Date;
-import java.util.Set;
+package com.example.management_service.modules.order.entities;
 
 import com.example.management_service.modules.car.entities.CarPart;
-import com.example.management_service.modules.order.entities.Order;
 import com.example.management_service.modules.user.entities.WorkerProfile;
 import com.example.management_service.shared.entities.BaseEntity;
-
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.EnumType;
-import jakarta.persistence.Enumerated;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.JoinTable;
-import jakarta.persistence.ManyToMany;
-import jakarta.persistence.ManyToOne;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
+
+import jakarta.persistence.*;
+import java.util.Date;
+import java.util.Set;
 
 @Entity
 @AllArgsConstructor
@@ -29,8 +20,8 @@ import lombok.NoArgsConstructor;
 public class OrderTask extends BaseEntity {
 
     @Enumerated(EnumType.STRING)
-    @Column(name = "status")
-    private OrderTaskStatus status;
+    @Column(name = "task_status")
+    private CompletionStatus taskStatus;
 
     @Column(name = "work_price")
     private double workPrice;
@@ -58,8 +49,5 @@ public class OrderTask extends BaseEntity {
     @ManyToOne(targetEntity = Order.class)
     @JoinColumn(name = "order_id", referencedColumnName = "id")
     private Order order;
-
-    public void setState(ITaskState state) {
-    }
 
 }

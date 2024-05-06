@@ -1,4 +1,4 @@
-package com.example.management_service.modules.order.dto;
+package com.example.management_service.modules.order.dto.order;
 
 import lombok.Data;
 

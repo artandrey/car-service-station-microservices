@@ -1,8 +1,8 @@
 package com.example.management_service.modules.user.services.worker_position;
 
-import java.util.List;
-
 import com.example.management_service.modules.user.entities.WorkerPosition;
+
+import java.util.List;
 
 public interface IWorkerPositionService {
     List<WorkerPosition> getAllWorkerPositions();

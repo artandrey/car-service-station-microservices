@@ -1,11 +1,11 @@
 package com.example.management_service.modules.order.controllers;
 
-import com.example.management_service.modules.order.dto.CreateOrderRequestDto;
-import com.example.management_service.modules.order.dto.OrderResponseDto;
-import com.example.management_service.modules.order.dto.UpdateOrderRequestDto;
+import com.example.management_service.modules.order.dto.order.CreateOrderRequestDto;
+import com.example.management_service.modules.order.dto.order.OrderResponseDto;
+import com.example.management_service.modules.order.dto.order.UpdateOrderRequestDto;
 import com.example.management_service.modules.order.entities.Order;
 import com.example.management_service.modules.order.mappers.OrderMapper;
-import com.example.management_service.modules.order.services.IOrderService;
+import com.example.management_service.modules.order.services.order.IOrderService;
 
 import jakarta.validation.Valid;
 

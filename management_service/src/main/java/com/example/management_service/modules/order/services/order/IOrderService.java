@@ -1,4 +1,4 @@
-package com.example.management_service.modules.order.services;
+package com.example.management_service.modules.order.services.order;
 
 import com.example.management_service.modules.order.entities.Order;
 
