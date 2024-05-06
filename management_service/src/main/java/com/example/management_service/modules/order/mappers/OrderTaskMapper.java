@@ -42,6 +42,5 @@ public class OrderTaskMapper {
     public OrderTask updateFromEntity(OrderTask updatedEntity, OrderTask entity) {
         modelMapper.map(updatedEntity, entity);
         return updatedEntity;
-
     }
 }

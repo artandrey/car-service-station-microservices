@@ -7,14 +7,21 @@ import com.example.management_service.modules.order.repository.OrderTaskReposito
 import com.example.management_service.modules.order.services.order_task.IOrderTaskService;
 import com.example.management_service.modules.user.entities.WorkerProfile;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 
 @Service
 public class OrderTaskService implements IOrderTaskService {
-    private OrderTaskRepository orderTaskRepository;
-    private OrderTaskMapper orderTaskMapper;
+    private final OrderTaskRepository orderTaskRepository;
+    private final OrderTaskMapper orderTaskMapper;
+
+    @Autowired
+    public OrderTaskService(OrderTaskRepository orderTaskRepository, OrderTaskMapper orderTaskMapper) {
+        this.orderTaskRepository = orderTaskRepository;
+        this.orderTaskMapper = orderTaskMapper;
+    }
 
     @Override
     public List<OrderTask> getAllOrderTasks() {
@@ -45,6 +52,11 @@ public class OrderTaskService implements IOrderTaskService {
         }
         orderTaskRepository.deleteById(orderTaskId);
         return true;
+    }
+
+    @Override
+    public List<OrderTask> getOrderTasksByOrderId(Long orderId) {
+        return orderTaskRepository.findByOrderId(orderId);
     }
 
     @Override

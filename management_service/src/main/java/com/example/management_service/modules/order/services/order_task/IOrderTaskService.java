@@ -16,5 +16,7 @@ public interface IOrderTaskService {
 
     boolean deleteOrderTask(Long orderTaskId);
 
+    List<OrderTask> getOrderTasksByOrderId(Long orderId);
+
     OrderTask addWorker(Long orderTaskId, WorkerProfile workerProfile);
 }
