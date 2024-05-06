@@ -22,8 +22,6 @@ import com.example.management_service.modules.car.entities.Car;
 import com.example.management_service.modules.car.mappers.CarMapper;
 import com.example.management_service.modules.car.services.car.ICarService;
 
-import jakarta.validation.Valid;
-
 @RestController
 @RequestMapping("/cars")
 public class CarController {

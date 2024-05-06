@@ -6,7 +6,6 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 
 import com.example.management_service.modules.car.entities.Car;
-import com.example.management_service.modules.car.entities.CarModel;
 import com.example.management_service.modules.car.exceptions.CarNotFoundException;
 import com.example.management_service.modules.car.repository.car.CarRepository;
 import com.example.management_service.modules.car.services.car.ICarService;

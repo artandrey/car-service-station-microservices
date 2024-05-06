@@ -7,11 +7,10 @@ import com.example.management_service.modules.order.entities.Order;
 import com.example.management_service.modules.order.mappers.OrderMapper;
 import com.example.management_service.modules.order.services.IOrderService;
 
-import jakarta.validation.Valid;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
