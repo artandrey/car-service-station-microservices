@@ -6,9 +6,11 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 
 import com.example.management_service.modules.car.entities.Car;
+import com.example.management_service.modules.car.entities.CarModel;
 import com.example.management_service.modules.car.exceptions.CarNotFoundException;
 import com.example.management_service.modules.car.repository.car.CarRepository;
 import com.example.management_service.modules.car.services.car.ICarService;
+import com.example.management_service.modules.car.services.car_model.ICarModelService;
 
 import lombok.AllArgsConstructor;
 
@@ -16,6 +18,7 @@ import lombok.AllArgsConstructor;
 @AllArgsConstructor
 public class CarService implements ICarService {
     private final CarRepository carRepository;
+    private final ICarModelService carModelService;
 
     @Override
     public List<Car> getCars(PageRequest pageRequest) {
@@ -29,6 +32,7 @@ public class CarService implements ICarService {
 
     @Override
     public Car createCar(Car car) {
+        carModelService.getCarModelById(car.getCarModel().getId());
         return carRepository.save(car);
     }
 

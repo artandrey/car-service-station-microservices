@@ -25,7 +25,7 @@ import com.example.management_service.modules.car.services.car.ICarService;
 import jakarta.validation.Valid;
 
 @RestController
-@RequestMapping("cars")
+@RequestMapping("/cars")
 public class CarController {
     @Autowired
     private CarMapper carMapper;
@@ -48,7 +48,7 @@ public class CarController {
     }
 
     @PostMapping
-    public ResponseEntity<?> createCar(@Valid @RequestBody CreateCarRequestDto carDTO) {
+    public ResponseEntity<?> createCar(@Validated @RequestBody CreateCarRequestDto carDTO) {
         Car car = carMapper.createDtoToModel(carDTO);
         car = carService.createCar(car);
         CarResponseDto createdCarDTO = carMapper.toDto(car);
