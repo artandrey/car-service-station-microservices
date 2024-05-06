@@ -1,16 +1,15 @@
 package com.example.management_service.modules.car.mappers;
 
-import com.example.management_service.modules.car.dto.car.CreateCarRequestDto;
+import om.e
+
 import com.example.management_service.modules.car.dto.car_model.CarModelResponseDto;
 import com.example.management_service.modules.car.dto.car_model.CreateCarModelRequestDto;
 import com.example.management_service.modules.car.entities.Car;
 import com.example.management_service.modules.car.entities.CarBrand;
-import com.example.management_service.modules.car.entities.CarModel;
-import org.modelmapper.ModelMapper;
+import com.example.management_service.modules.car.entities.CarModel;import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Component;
 
-import java.util.List;
-import java.util.stream.Collectors;
+import java.util.List;import ava.util.stream.Collectors;
 
 @Component
 public class CarModelMapper {
