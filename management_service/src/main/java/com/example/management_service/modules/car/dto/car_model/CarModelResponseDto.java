@@ -1,5 +1,10 @@
 package com.example.management_service.modules.car.dto.car_model;
 
-public class CarModelResponseDto {
+import lombok.Data;
 
+@Data
+public class CarModelResponseDto {
+    private Long id;
+    private String title;
+    private Integer year;
 }
