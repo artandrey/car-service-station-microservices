@@ -3,7 +3,6 @@ package com.example.management_service.modules.car.mappers;
 import com.example.management_service.modules.car.dto.car.CreateCarRequestDto;
 import com.example.management_service.modules.car.dto.car_model.CarModelResponseDto;
 import com.example.management_service.modules.car.dto.car_model.CreateCarModelRequestDto;
-import com.example.management_service.modules.car.dto.car_model.UpdateCarModelRequestDto;
 import com.example.management_service.modules.car.entities.Car;
 import com.example.management_service.modules.car.entities.CarBrand;
 import com.example.management_service.modules.car.entities.CarModel;
