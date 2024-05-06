@@ -5,7 +5,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.validation.annotation.Validated;
+
 import org.springframework.web.bind.annotation.*;
 
 import com.example.management_service.modules.car.dto.car_part.CarPartResponseDto;
@@ -14,6 +14,8 @@ import com.example.management_service.modules.car.dto.car_part.UpdateCarPartRequ
 import com.example.management_service.modules.car.entities.CarPart;
 import com.example.management_service.modules.car.mappers.CarPartMapper;
 import com.example.management_service.modules.car.services.car_part.ICarPartService;
+
+import jakarta.validation.Valid;
 
 @RestController
 @RequestMapping("/car-parts")
@@ -38,14 +40,14 @@ public class CarPartController {
 
     @PostMapping
     public ResponseEntity<CarPartResponseDto> createCarPart(
-            @Validated @RequestBody CreateCarPartRequestDto requestDto) {
+            @Valid @RequestBody CreateCarPartRequestDto requestDto) {
         CarPart carPart = carPartService.createCarPart(carPartMapper.toEntity(requestDto));
         return new ResponseEntity<>(carPartMapper.toDto(carPart), HttpStatus.CREATED);
     }
 
     @PutMapping("/{id}")
     public ResponseEntity<CarPartResponseDto> updateCarPart(@PathVariable Long id,
-            @Validated @RequestBody UpdateCarPartRequestDto requestDto) {
+            @Valid @RequestBody UpdateCarPartRequestDto requestDto) {
         CarPart updatedCarPart = carPartService.updateCarPart(id, carPartMapper.toEntity(requestDto));
         return ResponseEntity.ok(carPartMapper.toDto(updatedCarPart));
     }

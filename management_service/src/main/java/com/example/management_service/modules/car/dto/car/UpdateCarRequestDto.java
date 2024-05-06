@@ -6,8 +6,6 @@ import lombok.Data;
 
 @Data
 public class UpdateCarRequestDto {
-    @NotNull
-    private Long id;
 
     @NotNull
     private Long carModelId;

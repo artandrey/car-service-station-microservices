@@ -17,6 +17,7 @@ public class CreateCarRequestDto {
     private String vinCode;
 
     @NotBlank
+    @NotNull
     @Size(min = 3, max = 30)
     private String color;
 }

@@ -7,10 +7,12 @@ import com.example.management_service.modules.order.entities.Order;
 import com.example.management_service.modules.order.mappers.OrderMapper;
 import com.example.management_service.modules.order.services.IOrderService;
 
+import jakarta.validation.Valid;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.validation.annotation.Validated;
+
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -38,14 +40,14 @@ public class OrderController {
 
     @PostMapping
     public ResponseEntity<OrderResponseDto> createOrder(
-            @Validated @RequestBody CreateOrderRequestDto requestDto) {
+            @Valid @RequestBody CreateOrderRequestDto requestDto) {
         Order order = orderService.createOrder(orderMapper.toEntity(requestDto));
         return new ResponseEntity<>(orderMapper.toDto(order), HttpStatus.CREATED);
     }
 
     @PutMapping("/{id}")
     public ResponseEntity<OrderResponseDto> updateOrder(@PathVariable Long id,
-            @Validated @RequestBody UpdateOrderRequestDto requestDto) {
+            @Valid @RequestBody UpdateOrderRequestDto requestDto) {
         Order updatedOrder = orderService.updateOrder(id, orderMapper.toEntity(requestDto, id));
         return ResponseEntity.ok(orderMapper.toDto(updatedOrder));
     }

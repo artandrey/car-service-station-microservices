@@ -5,7 +5,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.validation.annotation.Validated;
+
 import org.springframework.web.bind.annotation.*;
 
 import com.example.management_service.modules.car.dto.car_model.CarModelResponseDto;
@@ -15,6 +15,8 @@ import com.example.management_service.modules.car.entities.CarModel;
 import com.example.management_service.modules.car.mappers.CarModelMapper;
 import com.example.management_service.modules.car.services.car_brand.ICarBrandService;
 import com.example.management_service.modules.car.services.car_model.ICarModelService;
+
+import jakarta.validation.Valid;
 
 @RestController
 @RequestMapping("/car-models")
@@ -40,7 +42,7 @@ public class CarModelController {
 
     @PostMapping
     public ResponseEntity<CarModelResponseDto> createCarModel(
-            @Validated @RequestBody CreateCarModelRequestDto createCarModelRequestDto) {
+            @Valid @RequestBody CreateCarModelRequestDto createCarModelRequestDto) {
         CarModel carModel = carModelService.createCarModel(carModelMapper.createDtoToModel(createCarModelRequestDto));
         carBrandService.getCarBrandById(carModel.getCarBrand().getId());
         return new ResponseEntity<>(carModelMapper.toDto(carModel), HttpStatus.CREATED);
@@ -48,7 +50,7 @@ public class CarModelController {
 
     @PutMapping("/{id}")
     public ResponseEntity<CarModelResponseDto> updateCarModel(@PathVariable Long id,
-            @Validated @RequestBody UpdateCarModelRequestDto carModelRequestDto) {
+            @Valid @RequestBody UpdateCarModelRequestDto carModelRequestDto) {
         CarModel carModel = carModelMapper.updateDtoToModel(carModelRequestDto, id);
 
         CarModel updatedCarModel = carModelService.updateCarModel(carModel);
