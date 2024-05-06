@@ -42,12 +42,17 @@ services:
     ports:
       - "8080:8080"
     depends_on:
-      - management_postgres
-      - discovery-server
+      management_postgres:
+        condition:
+          service_started
+      discovery-server:
+          condition:
+            service_healthy
     environment:
       SPRING_DATASOURCE_URL: jdbc:postgresql://management_postgres:5432/public
       SPRING_DATASOURCE_USERNAME: root
       SPRING_DATASOURCE_PASSWORD: 123456
+      eureka.client.serviceUrl.defaultZone: 'http://discovery-server:8081/eureka/'
   management_postgres:
     image: postgres:latest
     container_name: management_postgres
