@@ -1,8 +1,5 @@
 package com.example.management_service.modules.car.mappers;
 
-import java.util.function.Supplier;
-
-import org.modelmapper.Converter;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Component;
 
@@ -11,7 +8,7 @@ import com.example.management_service.modules.car.dto.car.CreateCarRequestDto;
 import com.example.management_service.modules.car.dto.car.UpdateCarRequestDto;
 import com.example.management_service.modules.car.entities.Car;
 import com.example.management_service.modules.car.entities.CarModel;
-import com.example.management_service.shared.entities.BaseEntity;
+import com.example.management_service.shared.services.ConverterService;
 
 @Component
 public class CarMapper {
@@ -25,14 +22,19 @@ public class CarMapper {
                         .map(CreateCarRequestDto::getCarModelId, Car::setCarModel));
     }
 
-    public Car createDtoToModel(CreateCarRequestDto createCarRequestDto) {
+    public Car toEntity(CreateCarRequestDto createCarRequestDto) {
         return modelMapper.map(createCarRequestDto, getModelClass());
     }
 
-    public Car updateDtoToModel(UpdateCarRequestDto updateCarRequestDto, long id) {
+    public Car toEntity(UpdateCarRequestDto updateCarRequestDto, long id) {
         Car car = modelMapper.map(updateCarRequestDto, getModelClass());
         car.setId(id);
         return car;
+    }
+
+    public Car updateFromEntity(Car updatedEntity, Car entity) {
+        modelMapper.map(updatedEntity, entity);
+        return updatedEntity;
     }
 
     public CarResponseDto toDto(Car car) {
@@ -43,18 +45,4 @@ public class CarMapper {
         return Car.class;
     }
 
-}
-
-class ConverterService {
-    public static <ENTITY extends BaseEntity> Converter<Long, ENTITY> idToEntity(Supplier<ENTITY> entitySupplier) {
-        return mappingContext -> {
-            Long id = mappingContext.getSource();
-            ENTITY entity = entitySupplier.get();
-            if (id != null) {
-                entity.setId(id);
-                return entity;
-            }
-            return null;
-        };
-    }
 }

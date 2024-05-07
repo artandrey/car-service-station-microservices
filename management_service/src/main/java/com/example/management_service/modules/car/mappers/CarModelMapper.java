@@ -5,6 +5,7 @@ import com.example.management_service.modules.car.dto.car_model.CreateCarModelRe
 import com.example.management_service.modules.car.dto.car_model.UpdateCarModelRequestDto;
 import com.example.management_service.modules.car.entities.CarBrand;
 import com.example.management_service.modules.car.entities.CarModel;
+import com.example.management_service.shared.services.ConverterService;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -23,11 +24,11 @@ public class CarModelMapper {
                         .map(CreateCarModelRequestDto::getBrandId, CarModel::setCarBrand));
     }
 
-    public CarModel createDtoToModel(CreateCarModelRequestDto createCarModelRequestDto) {
+    public CarModel toEntity(CreateCarModelRequestDto createCarModelRequestDto) {
         return modelMapper.map(createCarModelRequestDto, CarModel.class);
     }
 
-    public CarModel updateDtoToModel(UpdateCarModelRequestDto updateCarModelRequestDto, long id) {
+    public CarModel toEntity(UpdateCarModelRequestDto updateCarModelRequestDto, long id) {
         CarModel carModel = modelMapper.map(updateCarModelRequestDto, CarModel.class);
         carModel.setId(id);
         return carModel;
@@ -35,6 +36,11 @@ public class CarModelMapper {
 
     public CarModelResponseDto toDto(CarModel carModel) {
         return modelMapper.map(carModel, CarModelResponseDto.class);
+    }
+
+    public CarModel updateFromEntity(CarModel updatedEntity, CarModel entity) {
+        modelMapper.map(updatedEntity, entity);
+        return updatedEntity;
     }
 
     public List<CarModelResponseDto> toDto(List<CarModel> carModels) {

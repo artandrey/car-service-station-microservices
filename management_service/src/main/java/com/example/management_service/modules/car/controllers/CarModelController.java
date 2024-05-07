@@ -43,7 +43,7 @@ public class CarModelController {
     @PostMapping
     public ResponseEntity<CarModelResponseDto> createCarModel(
             @Valid @RequestBody CreateCarModelRequestDto createCarModelRequestDto) {
-        CarModel carModel = carModelService.createCarModel(carModelMapper.createDtoToModel(createCarModelRequestDto));
+        CarModel carModel = carModelService.createCarModel(carModelMapper.toEntity(createCarModelRequestDto));
         carBrandService.getCarBrandById(carModel.getCarBrand().getId());
         return new ResponseEntity<>(carModelMapper.toDto(carModel), HttpStatus.CREATED);
     }
@@ -51,7 +51,7 @@ public class CarModelController {
     @PutMapping("/{id}")
     public ResponseEntity<CarModelResponseDto> updateCarModel(@PathVariable Long id,
             @Valid @RequestBody UpdateCarModelRequestDto carModelRequestDto) {
-        CarModel carModel = carModelMapper.updateDtoToModel(carModelRequestDto, id);
+        CarModel carModel = carModelMapper.toEntity(carModelRequestDto, id);
 
         CarModel updatedCarModel = carModelService.updateCarModel(carModel);
         return ResponseEntity.ok(carModelMapper.toDto(updatedCarModel));

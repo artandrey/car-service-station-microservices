@@ -49,7 +49,7 @@ public class CarController {
 
     @PostMapping
     public ResponseEntity<?> createCar(@Valid @RequestBody CreateCarRequestDto carDTO) {
-        Car car = carMapper.createDtoToModel(carDTO);
+        Car car = carMapper.toEntity(carDTO);
         car = carService.createCar(car);
         CarResponseDto createdCarDTO = carMapper.toDto(car);
         return ResponseEntity.status(HttpStatus.CREATED).body(createdCarDTO);
@@ -57,7 +57,7 @@ public class CarController {
 
     @PutMapping("/{carId}")
     public ResponseEntity<?> updateCar(@PathVariable Long carId, @Valid @RequestBody UpdateCarRequestDto carDTO) {
-        Car car = carMapper.updateDtoToModel(carDTO, carId);
+        Car car = carMapper.toEntity(carDTO, carId);
         CarResponseDto updatedCarDTO = carMapper.toDto(car);
         return ResponseEntity.ok(updatedCarDTO);
     }

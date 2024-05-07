@@ -26,6 +26,11 @@ public class CarPartMapper {
         return modelMapper.map(entity, CarPartResponseDto.class);
     }
 
+    public CarPart updateFromEntity(CarPart updatedEntity, CarPart entity) {
+        modelMapper.map(updatedEntity, entity);
+        return updatedEntity;
+    }
+
     public List<CarPartResponseDto> toDto(List<CarPart> entities) {
         return entities.stream()
                 .map(this::toDto)
