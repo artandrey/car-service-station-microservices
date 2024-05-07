@@ -6,16 +6,17 @@ import org.springframework.stereotype.Service;
 
 import com.example.management_service.modules.car.entities.CarPart;
 import com.example.management_service.modules.car.exceptions.CarPartNotFoundException;
+import com.example.management_service.modules.car.mappers.CarPartMapper;
 import com.example.management_service.modules.car.repository.CarPartRepository;
 import com.example.management_service.modules.car.services.car_part.ICarPartService;
 
+import lombok.AllArgsConstructor;
+
 @Service
+@AllArgsConstructor
 public class CarPartService implements ICarPartService {
     private final CarPartRepository carPartRepository;
-
-    public CarPartService(CarPartRepository carPartRepository) {
-        this.carPartRepository = carPartRepository;
-    }
+    private final CarPartMapper carPartMapper;
 
     @Override
     public List<CarPart> getAllCarParts() {
@@ -35,11 +36,8 @@ public class CarPartService implements ICarPartService {
 
     @Override
     public CarPart updateCarPart(Long carPartId, CarPart carPart) {
-        if (!carPartRepository.existsById(carPartId)) {
-            throw new CarPartNotFoundException(carPartId);
-        }
-        carPart.setId(carPartId);
-        return carPartRepository.save(carPart);
+        CarPart carPartToUpdate = getCarPartById(carPartId);
+        return carPartRepository.save(carPartMapper.updateFromEntity(carPart, carPartToUpdate));
     }
 
     @Override

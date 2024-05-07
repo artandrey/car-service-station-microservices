@@ -15,14 +15,17 @@ public class CarBrandMapper {
         this.modelMapper = modelMapper;
     }
 
-    public CarBrand createDtoToModel(CreateCarBrandRequestDto createCarBrandRequestDto) {
+    public CarBrand toEntity(CreateCarBrandRequestDto createCarBrandRequestDto) {
         return modelMapper.map(createCarBrandRequestDto, CarBrand.class);
     }
 
-    public CarBrand updateDtoToModel(UpdateCarBrandRequestDto updateCarBrandRequestDto, long id) {
-        CarBrand carBrand = modelMapper.map(updateCarBrandRequestDto, CarBrand.class);
-        carBrand.setId(id);
-        return carBrand;
+    public CarBrand toEntity(UpdateCarBrandRequestDto createCarBrandRequestDto) {
+        return modelMapper.map(createCarBrandRequestDto, CarBrand.class);
+    }
+
+    public CarBrand updateFromEntity(CarBrand updatedEntity, CarBrand entity) {
+        modelMapper.map(updatedEntity, entity);
+        return updatedEntity;
     }
 
     public CarBrandResponseDto toDto(CarBrand carBrand) {

@@ -47,16 +47,16 @@ public class CarBrandController {
     @PostMapping
     public ResponseEntity<CarBrandResponseDto> createCarBrand(
             @Valid @RequestBody CreateCarBrandRequestDto createCarBrandRequestDto) {
-        CarBrand carBrand = carBrandService.createCarBrand(carBrandMapper.createDtoToModel(createCarBrandRequestDto));
+        CarBrand carBrand = carBrandService.createCarBrand(carBrandMapper.toEntity(createCarBrandRequestDto));
         return new ResponseEntity<>(carBrandMapper.toDto(carBrand), HttpStatus.CREATED);
     }
 
     @PutMapping("/{id}")
     public ResponseEntity<CarBrandResponseDto> updateCarBrand(@PathVariable Long id,
             @Valid @RequestBody UpdateCarBrandRequestDto carBrandRequestDto) {
-        CarBrand carBrand = carBrandMapper.updateDtoToModel(carBrandRequestDto, id);
+        CarBrand carBrand = carBrandMapper.toEntity(carBrandRequestDto);
 
-        CarBrand updatedCarBrand = carBrandService.updateCarBrand(carBrand);
+        CarBrand updatedCarBrand = carBrandService.updateCarBrand(id, carBrand);
         return ResponseEntity.ok(carBrandMapper.toDto(updatedCarBrand));
     }
 

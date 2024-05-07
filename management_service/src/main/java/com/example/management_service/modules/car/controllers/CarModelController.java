@@ -53,7 +53,7 @@ public class CarModelController {
             @Valid @RequestBody UpdateCarModelRequestDto carModelRequestDto) {
         CarModel carModel = carModelMapper.toEntity(carModelRequestDto, id);
 
-        CarModel updatedCarModel = carModelService.updateCarModel(carModel);
+        CarModel updatedCarModel = carModelService.updateCarModel(id, carModel);
         return ResponseEntity.ok(carModelMapper.toDto(updatedCarModel));
     }
 

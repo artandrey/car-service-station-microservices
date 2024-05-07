@@ -11,7 +11,7 @@ public interface ICarModelService {
 
     CarModel createCarModel(CarModel carModel);
 
-    CarModel updateCarModel(CarModel carModel);
+    CarModel updateCarModel(Long carModelId, CarModel carModel);
 
     boolean deleteCarModel(Long carModelId);
 }
