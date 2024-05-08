@@ -85,9 +85,38 @@ services:
       - "5433:5432"
     volumes:
       - payment-postgres-data:/var/lib/postgresql/data
+  knowledge_base:
+    build: ./knowledge_base/
+    container_name: knowledge_base
+    ports:
+      - "8085:8085"
+    depends_on:
+      knowledge_base_postgres:
+        condition: service_started
+      discovery-server:
+        condition: service_healthy
+    environment:
+      SERVER_PORT: 8085
+      SPRING_DATASOURCE_URL: jdbc:postgresql://knowledge_base_postgres:5432/public
+      SPRING_DATASOURCE_USERNAME: root
+      SPRING_DATASOURCE_PASSWORD: 123456
+      eureka.client.serviceUrl.defaultZone: 'http://discovery-server:8081/eureka/'
+
+  knowledge_base_postgres:
+    image: postgres:latest
+    container_name: knowledge_base_postgres
+    environment:
+      POSTGRES_USER: root
+      POSTGRES_PASSWORD: 123456
+      POSTGRES_DB: public
+    ports:
+      - "5434:5432"
+    volumes:
+      - knowledge-base-postgres-data:/var/lib/postgresql/data
 
 volumes:
   management-postgres-data:
   payment-postgres-data:
+  knowledge-base-postgres-data:
 
 
