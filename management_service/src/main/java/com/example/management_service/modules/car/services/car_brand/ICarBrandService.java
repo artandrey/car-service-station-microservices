@@ -11,7 +11,7 @@ public interface ICarBrandService {
 
     CarBrand createCarBrand(CarBrand carBrand);
 
-    CarBrand updateCarBrand(CarBrand carBrand);
+    CarBrand updateCarBrand(Long carBrandId, CarBrand carBrand);
 
     boolean deleteCarBrand(Long carBrandId);
 }

@@ -5,6 +5,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -21,8 +22,10 @@ import com.example.management_service.modules.car.entities.CarBrand;
 import com.example.management_service.modules.car.mappers.CarBrandMapper;
 import com.example.management_service.modules.car.services.car_brand.ICarBrandService;
 
+import jakarta.validation.Valid;
+
 @RestController
-@RequestMapping("/api/car-brands")
+@RequestMapping("/car-brands")
 public class CarBrandController {
     @Autowired
     private ICarBrandService carBrandService;
@@ -43,17 +46,17 @@ public class CarBrandController {
 
     @PostMapping
     public ResponseEntity<CarBrandResponseDto> createCarBrand(
-            @RequestBody CreateCarBrandRequestDto createCarBrandRequestDto) {
-        CarBrand carBrand = carBrandService.createCarBrand(carBrandMapper.createDtoToModel(createCarBrandRequestDto));
+            @Valid @RequestBody CreateCarBrandRequestDto createCarBrandRequestDto) {
+        CarBrand carBrand = carBrandService.createCarBrand(carBrandMapper.toEntity(createCarBrandRequestDto));
         return new ResponseEntity<>(carBrandMapper.toDto(carBrand), HttpStatus.CREATED);
     }
 
     @PutMapping("/{id}")
     public ResponseEntity<CarBrandResponseDto> updateCarBrand(@PathVariable Long id,
-            @RequestBody UpdateCarBrandRequestDto carBrandRequestDto) {
-        CarBrand carBrand = carBrandMapper.updateDtoToModel(carBrandRequestDto, id);
+            @Valid @RequestBody UpdateCarBrandRequestDto carBrandRequestDto) {
+        CarBrand carBrand = carBrandMapper.toEntity(carBrandRequestDto);
 
-        CarBrand updatedCarBrand = carBrandService.updateCarBrand(carBrand);
+        CarBrand updatedCarBrand = carBrandService.updateCarBrand(id, carBrand);
         return ResponseEntity.ok(carBrandMapper.toDto(updatedCarBrand));
     }
 

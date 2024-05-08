@@ -31,3 +31,8 @@ build/
 
 ### VS Code ###
 .vscode/
+vs_code workspace.code-workspace
+.env*.local
+
+
+development

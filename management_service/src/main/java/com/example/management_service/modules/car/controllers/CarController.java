@@ -4,7 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.validation.annotation.Validated;
+
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -25,7 +25,7 @@ import com.example.management_service.modules.car.services.car.ICarService;
 import jakarta.validation.Valid;
 
 @RestController
-@RequestMapping("cars")
+@RequestMapping("/cars")
 public class CarController {
     @Autowired
     private CarMapper carMapper;
@@ -49,15 +49,15 @@ public class CarController {
 
     @PostMapping
     public ResponseEntity<?> createCar(@Valid @RequestBody CreateCarRequestDto carDTO) {
-        Car car = carMapper.createDtoToModel(carDTO);
+        Car car = carMapper.toEntity(carDTO);
         car = carService.createCar(car);
         CarResponseDto createdCarDTO = carMapper.toDto(car);
         return ResponseEntity.status(HttpStatus.CREATED).body(createdCarDTO);
     }
 
     @PutMapping("/{carId}")
-    public ResponseEntity<?> updateCar(@PathVariable Long carId, @Validated @RequestBody UpdateCarRequestDto carDTO) {
-        Car car = carMapper.updateDtoToModel(carDTO, carId);
+    public ResponseEntity<?> updateCar(@PathVariable Long carId, @Valid @RequestBody UpdateCarRequestDto carDTO) {
+        Car car = carMapper.toEntity(carDTO, carId);
         CarResponseDto updatedCarDTO = carMapper.toDto(car);
         return ResponseEntity.ok(updatedCarDTO);
     }

@@ -6,16 +6,17 @@ import org.springframework.stereotype.Service;
 
 import com.example.management_service.modules.car.entities.CarBrand;
 import com.example.management_service.modules.car.exceptions.CarBrandNotFoundException;
+import com.example.management_service.modules.car.mappers.CarBrandMapper;
 import com.example.management_service.modules.car.repository.car_brand.CarBrandRepository;
 import com.example.management_service.modules.car.services.car_brand.ICarBrandService;
 
+import lombok.AllArgsConstructor;
+
 @Service
+@AllArgsConstructor
 public class CarBrandService implements ICarBrandService {
     private final CarBrandRepository carBrandRepository;
-
-    public CarBrandService(CarBrandRepository carBrandRepository) {
-        this.carBrandRepository = carBrandRepository;
-    }
+    private final CarBrandMapper carBrandMapper;
 
     @Override
     public List<CarBrand> getAllCarBrands() {
@@ -34,11 +35,10 @@ public class CarBrandService implements ICarBrandService {
     }
 
     @Override
-    public CarBrand updateCarBrand(CarBrand carBrand) {
-        if (!carBrandRepository.existsById(carBrand.getId())) {
-            throw new CarBrandNotFoundException(carBrand.getId());
-        }
-        return carBrandRepository.save(carBrand);
+    public CarBrand updateCarBrand(Long carBrandId, CarBrand carBrand) {
+        CarBrand carBrandToUpdate = getCarBrandById(carBrandId);
+        return carBrandRepository.save(carBrandMapper.updateFromEntity(carBrand, carBrandToUpdate));
+
     }
 
     @Override
