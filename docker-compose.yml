@@ -90,6 +90,8 @@ services:
     container_name: knowledge_base
     ports:
       - "8085:8085"
+    links:
+      - discovery-server
     depends_on:
       knowledge_base_postgres:
         condition: service_started
