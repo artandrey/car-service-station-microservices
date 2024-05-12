@@ -2,6 +2,7 @@ package com.example.knowledge_base.modules.documents_upload.services.file_upload
 
 import java.util.List;
 
+import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.example.knowledge_base.modules.documents_upload.entities.FileRecord;
@@ -12,6 +13,7 @@ import com.example.knowledge_base.modules.documents_upload.services.file_upload.
 import lombok.AllArgsConstructor;
 
 @AllArgsConstructor
+@Service
 public class FileUploadService implements IFileUploadService {
 
     private final IFileUploadRepository fileUploadRepository;
