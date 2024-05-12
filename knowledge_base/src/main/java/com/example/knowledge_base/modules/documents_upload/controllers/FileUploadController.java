@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.example.knowledge_base.modules.documents_upload.entities.FileRecord;
+import com.example.knowledge_base.modules.documents_upload.exceptions.UnsupportedFileFormatException;
 import com.example.knowledge_base.modules.documents_upload.services.file_upload.IFileUploadService;
 
 import lombok.AllArgsConstructor;
@@ -33,6 +34,10 @@ public class FileUploadController {
 
     @PostMapping()
     public ResponseEntity<String> upload(@RequestParam("file") MultipartFile file) {
+        if (file.getContentType() != "text/plain") {
+            throw new UnsupportedFileFormatException();
+        }
+
         return new ResponseEntity<>(fileUploadService.addFile(file), HttpStatus.OK);
     }
 

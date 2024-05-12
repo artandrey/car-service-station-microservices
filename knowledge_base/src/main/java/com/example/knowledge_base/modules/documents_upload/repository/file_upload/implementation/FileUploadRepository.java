@@ -55,6 +55,11 @@ public class FileUploadRepository implements IFileUploadRepository {
 
     }
 
+    public boolean deleteById(String id) {
+        operations.delete(new Query(Criteria.where("_id").is(id)));
+        return true;
+    }
+
     public Optional<FileRecord> downloadFile(String id) {
 
         GridFSFile gridFSFile = template.findOne(new Query(Criteria.where("_id").is(id)));

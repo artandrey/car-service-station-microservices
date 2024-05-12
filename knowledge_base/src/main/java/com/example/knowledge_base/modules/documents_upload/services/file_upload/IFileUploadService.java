@@ -12,4 +12,6 @@ public interface IFileUploadService {
     FileRecord getFile(String id);
 
     List<FileRecord> getAll();
+
+    boolean deleteById(String id);
 }

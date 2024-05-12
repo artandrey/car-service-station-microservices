@@ -32,4 +32,9 @@ public class FileUploadService implements IFileUploadService {
         return fileUploadRepository.findAll();
     }
 
+    @Override
+    public boolean deleteById(String id) {
+        return fileUploadRepository.deleteById(id);
+    }
+
 }

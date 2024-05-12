@@ -13,4 +13,6 @@ public interface IFileUploadRepository {
     String addFile(MultipartFile upload);
 
     Optional<FileRecord> downloadFile(String id);
+
+    boolean deleteById(String id);
 }
