@@ -16,7 +16,7 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.example.knowledge_base.modules.documents_upload.entities.FileRecord;
-import com.example.knowledge_base.modules.documents_upload.services.file_upload.IEmbeddedFileUploadService;
+import com.example.knowledge_base.modules.documents_upload.services.file_upload.IFileUploadService;
 
 import lombok.AllArgsConstructor;
 
@@ -24,7 +24,7 @@ import lombok.AllArgsConstructor;
 @RequestMapping("/files")
 @AllArgsConstructor
 public class FileUploadController {
-    private final IEmbeddedFileUploadService fileUploadService;
+    private final IFileUploadService fileUploadService;
 
     @GetMapping()
     public ResponseEntity<List<FileRecord>> getAll() {

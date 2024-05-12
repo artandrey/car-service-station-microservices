@@ -7,12 +7,12 @@ import org.springframework.web.multipart.MultipartFile;
 import com.example.knowledge_base.modules.documents_upload.entities.FileRecord;
 import com.example.knowledge_base.modules.documents_upload.exceptions.FileNotFoundException;
 import com.example.knowledge_base.modules.documents_upload.repository.file_upload.IFileUploadRepository;
-import com.example.knowledge_base.modules.documents_upload.services.file_upload.IEmbeddedFileUploadService;
+import com.example.knowledge_base.modules.documents_upload.services.file_upload.IFileUploadService;
 
 import lombok.AllArgsConstructor;
 
 @AllArgsConstructor
-public class EmbeddedFileUploadService implements IEmbeddedFileUploadService {
+public class FileUploadService implements IFileUploadService {
 
     private final IFileUploadRepository fileUploadRepository;
 
