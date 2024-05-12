@@ -92,8 +92,11 @@ services:
       - "8085:8085"
     links:
       - discovery-server
+      - knowledge-base-mongodb-filesore
     depends_on:
       knowledge_base_postgres:
+        condition: service_started
+      knowledge-base-mongodb-filesore:
         condition: service_started
       api_gateway:
         condition: service_started
@@ -106,7 +109,7 @@ services:
       SPRING_DATASOURCE_PASSWORD: 123456
       eureka.client.serviceUrl.defaultZone: 'http://discovery-server:8081/eureka/'
       spring.ai.openai.api-key: ${OPEN_AI_API_KEY}
-
+      spring.data.mongodb.uri: mongodb://root:123456@knowledge-base-mongodb-filesore:27017/filestore
   knowledge_base_postgres:
     image: ankane/pgvector
     container_name: knowledge_base_postgres
@@ -118,10 +121,18 @@ services:
       - "5434:5432"
     volumes:
       - knowledge-base-postgres-data:/var/lib/postgresql/data
-
+  knowledge-base-mongodb-filesore:
+    image: mongo:latest
+    environment:
+      - MONGO_INITDB_ROOT_USERNAME=root
+      - MONGO_INITDB_ROOT_PASSWORD=123456
+      - MONGO_INITDB_DATABASE=filestore
+    volumes:
+      - knowledge-base-mongo-filestore:/data/db
 volumes:
   management-postgres-data:
   payment-postgres-data:
   knowledge-base-postgres-data:
+  knowledge-base-mongo-filestore:
 
 
