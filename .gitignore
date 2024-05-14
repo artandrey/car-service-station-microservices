@@ -33,6 +33,6 @@ build/
 .vscode/
 vs_code workspace.code-workspace
 .env*.local
-
+*.log
 
 development

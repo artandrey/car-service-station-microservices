@@ -18,6 +18,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import com.example.knowledge_base.modules.documents_upload.entities.FileRecord;
 import com.example.knowledge_base.modules.documents_upload.exceptions.UnsupportedFileFormatException;
+import com.example.knowledge_base.modules.documents_upload.services.documents_upload.IDocumentsUploadService;
 import com.example.knowledge_base.modules.documents_upload.services.file_upload.IFileUploadService;
 
 import lombok.AllArgsConstructor;
@@ -27,6 +28,8 @@ import lombok.AllArgsConstructor;
 @AllArgsConstructor
 public class FileUploadController {
     private final IFileUploadService fileUploadService;
+    // TODO replace all with this
+    private final IDocumentsUploadService documentsUploadService;
 
     @GetMapping()
     public ResponseEntity<List<FileRecord>> getAll() {
@@ -35,11 +38,14 @@ public class FileUploadController {
 
     @PostMapping()
     public ResponseEntity<String> upload(@RequestParam("file") MultipartFile file) {
-        if (file.getContentType() != "text/plain") {
+
+        System.out.println(file.getContentType());
+        System.out.println(file.getContentType().equals("text/plain"));
+        if (file.getContentType() == null || !file.getContentType().equals("text/plain")) {
             throw new UnsupportedFileFormatException();
         }
 
-        return new ResponseEntity<>(fileUploadService.addFile(file), HttpStatus.OK);
+        return new ResponseEntity<>(documentsUploadService.upload(file), HttpStatus.OK);
     }
 
     @GetMapping("/download/{id}")
