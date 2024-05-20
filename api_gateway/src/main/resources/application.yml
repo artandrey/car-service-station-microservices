@@ -1,0 +1,39 @@
+spring:
+    application:
+        name: api_gateway
+    security:
+        oauth2:
+            resourceserver:
+                jwt:
+                    issuer-uri: ${keycloak.url}/realms/${keycloak.realm}
+                    jwk-set-uri: ${spring.security.oauth2.resourceserver.jwt.issuer-uri}/protocol/openid-connect/certs
+    cloud:
+        gateway:
+            discovery:
+                locator:
+                    enabled: true
+                    lower-case-service-id: true
+            routes:
+                - id: management-service
+                  uri: lb://management-service
+                  predicates:
+                      - Path=/api/v1/management/**
+                  filters:
+                      - RewritePath=/api/v1/management/?(?<segment>.*), /$\{segment}
+                - id: echo
+                  uri: https://echo.zuplo.io/
+                  predicates:
+                      - Path=/api/v1/echo/**
+                  filters:
+                      - RewritePath=/api/v1/echo/?(?<segment>.*), /$\{segment}
+
+eureka:
+    client:
+        serviceUrl:
+            defaultZone: http://localhost:8081/eureka/
+
+keycloak:
+    url: http://localhost:9999
+    admin: admin
+    password: 1234
+    secret: Ge9Hg14J0fajXyQnHRCWlU0gNsCcih4t

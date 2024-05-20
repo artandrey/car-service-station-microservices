@@ -30,12 +30,20 @@ services:
     environment:
       SERVER_PORT: 8082
       eureka.client.serviceUrl.defaultZone: 'http://discovery-server:8081/eureka/'
+      keycloak.realm: car-service-realm
+      keycloak.client: car-service
+      keycloak.admin: admin
+      keycloak.password: 123456
+      keycloak.secret: Ge9Hg14J0fajXyQnHRCWlU0gNsCcih4t
+      keycloak.url: http://keycloak:9000
 
   management_app:
     build: ./management_service/
     container_name: management_app
     ports:
       - "8080:8080"
+    links:
+      - api_gateway
     depends_on:
       management_postgres:
         condition: service_started
@@ -130,6 +138,22 @@ services:
       - MONGO_INITDB_DATABASE=filestore
     volumes:
       - knowledge-base-mongo-filestore:/data/db
+
+
+  keycloak:
+    image: quay.io/keycloak/keycloak:21.1.1
+    command:
+      - "-v start-dev"
+      - "--http-port=9000"
+      - "--import-realm"
+    ports:
+      - "9000:9000"
+    environment:
+      KEYCLOAK_ADMIN: root
+      KEYCLOAK_ADMIN_PASSWORD: 123456
+    volumes:
+      - ./keycloak:/opt/keycloak/data/import
+
 volumes:
   management-postgres-data:
   payment-postgres-data:
