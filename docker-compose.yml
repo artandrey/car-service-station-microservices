@@ -118,7 +118,7 @@ services:
       eureka.client.serviceUrl.defaultZone: 'http://discovery-server:8081/eureka/'
       spring.ai.openai.api-key: ${OPEN_AI_API_KEY}
       spring.data.mongodb.uri: mongodb://root:123456@knowledge-base-mongodb-filesore:27017/filestore?authSource=admin
-      
+
   knowledge_base_postgres:
     image: ankane/pgvector
     container_name: knowledge_base_postgres
@@ -139,7 +139,6 @@ services:
     volumes:
       - knowledge-base-mongo-filestore:/data/db
 
-
   keycloak:
     image: quay.io/keycloak/keycloak:21.1.1
     command:
@@ -153,11 +152,44 @@ services:
       KEYCLOAK_ADMIN_PASSWORD: 123456
     volumes:
       - ./keycloak:/opt/keycloak/data/import
+  ai_assistant:
+    build: ./ai_assistant/
+    container_name: ai_assistant
+    ports:
+      - "8086:8086"
+    links:
+      - discovery-server
+    depends_on:
+      api_gateway:
+        condition: service_started
+      discovery-server:
+        condition: service_healthy
+      ai_assistant_postgres:
+        condition: service_started
+    environment:
+      SERVER_PORT: 8086
+      SPRING_DATASOURCE_URL: jdbc:postgresql://ai_assistant_postgres:5432/public
+      SPRING_DATASOURCE_USERNAME: root
+      SPRING_DATASOURCE_PASSWORD: 123456
+      eureka.client.serviceUrl.defaultZone: 'http://discovery-server:8081/eureka/'
+      spring.ai.openai.api-key: ${OPEN_AI_API_KEY}
+  ai_assistant_postgres:
+    image: ankane/pgvector
+    container_name: ai_assistant_postgres
+    environment:
+      POSTGRES_USER: root
+      POSTGRES_PASSWORD: 123456
+      POSTGRES_DB: public
+    ports:
+      - "5435:5432"
+    volumes:
+      - ai_assistant_postgres-data:/var/lib/postgresql/data
 
 volumes:
   management-postgres-data:
   payment-postgres-data:
   knowledge-base-postgres-data:
   knowledge-base-mongo-filestore:
+  ai_assistant_postgres-data:
 
 

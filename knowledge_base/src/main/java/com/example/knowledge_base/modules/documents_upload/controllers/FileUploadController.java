@@ -28,7 +28,6 @@ import lombok.AllArgsConstructor;
 @AllArgsConstructor
 public class FileUploadController {
     private final IFileUploadService fileUploadService;
-    // TODO replace all with this
     private final IDocumentsUploadService documentsUploadService;
 
     @GetMapping()
@@ -39,8 +38,6 @@ public class FileUploadController {
     @PostMapping()
     public ResponseEntity<String> upload(@RequestParam("file") MultipartFile file) {
 
-        System.out.println(file.getContentType());
-        System.out.println(file.getContentType().equals("text/plain"));
         if (file.getContentType() == null || !file.getContentType().equals("text/plain")) {
             throw new UnsupportedFileFormatException();
         }
@@ -59,7 +56,7 @@ public class FileUploadController {
 
     @DeleteMapping("/{id}")
     public ResponseEntity<?> delete(@PathVariable String id) {
-        fileUploadService.deleteById(id);
+        documentsUploadService.delete(id);
         return ResponseEntity.accepted().build();
     }
 }

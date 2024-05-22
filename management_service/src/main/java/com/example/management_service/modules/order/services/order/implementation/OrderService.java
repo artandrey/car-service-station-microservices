@@ -50,4 +50,9 @@ public class OrderService implements IOrderService {
         orderRepository.deleteById(orderId);
         return true;
     }
+
+    @Override
+    public List<Order> getOrdersByClientId(String userId) {
+        return orderRepository.getOrdersByClientId(userId);
+    }
 }

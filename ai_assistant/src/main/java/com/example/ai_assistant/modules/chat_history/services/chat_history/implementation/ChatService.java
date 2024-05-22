@@ -4,7 +4,7 @@ import java.util.List;
 
 import org.springframework.stereotype.Service;
 
-import com.example.ai_assistant.modules.chat_history.entities.ChatMessage;
+import com.example.ai_assistant.modules.chat_history.entities.AppChatMessage;
 import com.example.ai_assistant.modules.chat_history.repository.ChatMessageRepository;
 import com.example.ai_assistant.modules.chat_history.services.chat_history.IChatService;
 
@@ -17,12 +17,12 @@ public class ChatService implements IChatService {
     private final ChatMessageRepository chatMessageRepository;
 
     @Override
-    public ChatMessage createMessage(ChatMessage chatMessage) {
+    public AppChatMessage createMessage(AppChatMessage chatMessage) {
         return chatMessageRepository.save(chatMessage);
     }
 
     @Override
-    public List<ChatMessage> getMessagesByUserId(String userId) {
+    public List<AppChatMessage> getMessagesByUserId(String userId) {
         return chatMessageRepository.findByUserId(userId);
     }
 }

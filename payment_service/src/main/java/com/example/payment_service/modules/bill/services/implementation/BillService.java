@@ -1,4 +1,4 @@
-package com.example.payment_service.modules.bill.services;
+package com.example.payment_service.modules.bill.services.implementation;
 
 import java.util.List;
 import java.util.Optional;
@@ -11,12 +11,13 @@ import com.example.payment_service.modules.bill.entities.Bill;
 import com.example.payment_service.modules.bill.exceptions.BillNotFoundException;
 import com.example.payment_service.modules.bill.exceptions.NotEnoughMoneyException;
 import com.example.payment_service.modules.bill.repository.BillRepository;
+import com.example.payment_service.modules.bill.services.IBillService;
 
 import lombok.AllArgsConstructor;
 
 @Service
 @AllArgsConstructor
-public class BillService {
+public class BillService implements IBillService {
     private final BillRepository billRepository;
 
     public List<Bill> getAllBills() {
@@ -43,5 +44,15 @@ public class BillService {
         bill.setRest(rest);
 
         return billRepository.save(bill);
+    }
+
+    @Override
+    public Bill createBill(Bill bill) {
+        return billRepository.save(bill);
+    }
+
+    @Override
+    public List<Bill> getBillsByClientId(String clientId) {
+        return billRepository.findByClientId(clientId);
     }
 }

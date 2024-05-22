@@ -2,10 +2,10 @@ package com.example.ai_assistant.modules.chat_history.services.chat_history;
 
 import java.util.List;
 
-import com.example.ai_assistant.modules.chat_history.entities.ChatMessage;
+import com.example.ai_assistant.modules.chat_history.entities.AppChatMessage;
 
 public interface IChatService {
-    ChatMessage createMessage(ChatMessage chatMessage);
+    AppChatMessage createMessage(AppChatMessage chatMessage);
 
-    List<ChatMessage> getMessagesByUserId(String userId);
+    List<AppChatMessage> getMessagesByUserId(String userId);
 }

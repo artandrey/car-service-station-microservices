@@ -12,6 +12,6 @@ import lombok.NoArgsConstructor;
 public class ChatMessageResponseDto {
     private String content;
     private String userId;
-    private boolean isBot;
+    private Boolean isBot;
     private Date createdAt;
 }
