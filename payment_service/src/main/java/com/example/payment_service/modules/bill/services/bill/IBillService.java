@@ -1,4 +1,4 @@
-package com.example.payment_service.modules.bill.services;
+package com.example.payment_service.modules.bill.services.bill;
 
 import java.util.List;
 

@@ -22,18 +22,27 @@ import com.example.ai_assistant.modules.chat_history.mappers.ChatMessageMapper;
 import com.example.ai_assistant.modules.chat_history.services.chat_history.implementation.ChatService;
 import com.example.ai_assistant.modules.shared.util.JwtUtil;
 
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import lombok.AllArgsConstructor;
 
 @RestController
 @RequestMapping("/conversation")
 @AllArgsConstructor
 public class ChatController {
+
     private final ChatService chatService;
     private final ChatMessageMapper chatMessageMapper;
     private final IAiChatService aiResponseService;
 
-    @GetMapping("/chat/messages")
-    public List<ChatMessageResponseDto> getUserMessages(@PathVariable String userId,
+    @Operation(summary = "Get user chat history", description = "Retrieve chat history with AI for a specific user.")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Successfully retrieved messages"),
+    })
+    @GetMapping("/chat/messages/{userId}")
+    public List<ChatMessageResponseDto> getUserMessages(
+            @PathVariable String userId,
             @RequestHeader("Authorization") String authorization) {
         String identityUserId = JwtUtil.mapJwtToUser(authorization).getSid();
         return chatService.getMessagesByUserId(identityUserId)
@@ -42,6 +51,11 @@ public class ChatController {
                 .collect(Collectors.toList());
     }
 
+    @Operation(summary = "Retrieve response", description = "Post a chat message and retrieve response to the message from AI")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Successfully posted message"),
+            @ApiResponse(responseCode = "400", description = "Bad request"),
+    })
     @PostMapping("/message")
     public ResponseEntity<ChatMessageResponseDto> postMessage(
             @Valid @RequestBody ChatMessageRequestDto chatMessageRequestDto,

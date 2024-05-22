@@ -22,10 +22,10 @@ public class GlobalExceptionHandler {
 
 }
 
-@AllArgsConstructor
 @Data
+@AllArgsConstructor
 class ErrorResponse {
     private String errorCode;
-    private String message;
 
+    private String message;
 }

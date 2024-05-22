@@ -37,3 +37,20 @@ keycloak:
     admin: admin
     password: 1234
     secret: Ge9Hg14J0fajXyQnHRCWlU0gNsCcih4t
+springdoc:
+    api-docs:
+        enabled: true
+    swagger-ui:
+        enabled: true
+        path: /swagger-ui/index.html
+        urls:
+            - url: /v3/api-docs
+              name: API Gateway Service
+            - url: /management-service/v3/api-docs
+              name: Management Service
+            - url: /payment-service/v3/api-docs
+              name: Payment Service
+            - url: /ai-service/v3/api-docs
+              name: AI Service
+            - url: /knowledge-base/v3/api-docs
+              name: Knowledge Base Service
