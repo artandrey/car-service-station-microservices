@@ -18,14 +18,45 @@ spring:
                   uri: lb://management-service
                   predicates:
                       - Path=/api/v1/management/**
+                      - Path=/management-service/swagger-ui/**, /management-service/swagger-resources/**, /management-service/v3/api-docs/**
                   filters:
                       - RewritePath=/api/v1/management/?(?<segment>.*), /$\{segment}
-                - id: echo
-                  uri: https://echo.zuplo.io/
+                      - RewritePath=/management-service/swagger-ui/?(?<segment>.*), /swagger-ui/$\{segment}
+                      - RewritePath=/management-service/swagger-resources/?(?<segment>.*), /swagger-resources/$\{segment}
+                      - RewritePath=/management-service/v3/api-docs/?(?<segment>.*), /v3/api-docs/$\{segment}
+
+                - id: ai-service
+                  uri: lb://ai-assistant
                   predicates:
-                      - Path=/api/v1/echo/**
+                      - Path=/api/v1/ai/**
+                      - Path=/ai-service/swagger-ui/**, /ai-service/swagger-resources/**, /ai-service/v3/api-docs/**
                   filters:
-                      - RewritePath=/api/v1/echo/?(?<segment>.*), /$\{segment}
+                      - RewritePath=/api/v1/ai/?(?<segment>.*), /$\{segment}
+                      - RewritePath=/ai-service/swagger-ui/?(?<segment>.*), /swagger-ui/$\{segment}
+                      - RewritePath=/ai-service/swagger-resources/?(?<segment>.*), /swagger-resources/$\{segment}
+                      - RewritePath=/ai-service/v3/api-docs/?(?<segment>.*), /v3/api-docs/$\{segment}
+
+                - id: payment-service
+                  uri: lb://payment-service
+                  predicates:
+                      - Path=/api/v1/payment/**
+                      - Path=/payment-service/swagger-ui/**, /payment-service/swagger-resources/**, /payment-service/v3/api-docs/**
+                  filters:
+                      - RewritePath=/api/v1/payment/?(?<segment>.*), /$\{segment}
+                      - RewritePath=/payment-service/swagger-ui/?(?<segment>.*), /swagger-ui/$\{segment}
+                      - RewritePath=/payment-service/swagger-resources/?(?<segment>.*), /swagger-resources/$\{segment}
+                      - RewritePath=/payment-service/v3/api-docs/?(?<segment>.*), /v3/api-docs/$\{segment}
+
+                - id: knowledge-base
+                  uri: lb://knowledge-base
+                  predicates:
+                      - Path=/api/v1/knowledge-base/**
+                      - Path=/knowledge-base/swagger-ui/**, /knowledge-base/swagger-resources/**, /knowledge-base/v3/api-docs/**
+                  filters:
+                      - RewritePath=/api/v1/knowledge-base/?(?<segment>.*), /$\{segment}
+                      - RewritePath=/knowledge-base/swagger-ui/?(?<segment>.*), /swagger-ui/$\{segment}
+                      - RewritePath=/knowledge-base/swagger-resources/?(?<segment>.*), /swagger-resources/$\{segment}
+                      - RewritePath=/knowledge-base/v3/api-docs/?(?<segment>.*), /v3/api-docs/$\{segment}
 
 eureka:
     client:
@@ -40,6 +71,7 @@ keycloak:
 springdoc:
     api-docs:
         enabled: true
+        path: /v3/api-docs
     swagger-ui:
         enabled: true
         path: /swagger-ui/index.html

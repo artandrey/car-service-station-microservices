@@ -29,7 +29,8 @@ public class SecurityConfig {
 
                 .authorizeExchange(exchange -> exchange
                         .pathMatchers("/auth/v1/*").permitAll()
-                        .pathMatchers("/swagger-ui/**", "/swagger-resources/*", "/v3/api-docs/**", "/h2-console/**")
+                        .pathMatchers("/swagger-ui/**", "/swagger-resources/*", "/v3/api-docs/**")
+                        .permitAll().pathMatchers("*/v3/api-docs/**", "*/swagger-ui/**", "*/swagger-resources/*")
                         .permitAll()
                         // for working with keycloak auth
                         .anyExchange().authenticated()
