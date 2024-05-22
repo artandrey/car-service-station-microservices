@@ -10,13 +10,14 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import com.example.payment_service.modules.bill.dto.BillResponseDto;
+import com.example.payment_service.modules.bill.dto.CreateBillRequestDto;
 import com.example.payment_service.modules.bill.dto.CreateCashPaymentRequestDto;
 import com.example.payment_service.modules.bill.entities.Bill;
 import com.example.payment_service.modules.bill.mappers.BillMapper;
-import com.example.payment_service.modules.bill.services.BillService;
+import com.example.payment_service.modules.bill.services.implementation.BillService;
 
 @RestController
-@RequestMapping("/bills")
+@RequestMapping("/bills/management")
 public class BillController {
     @Autowired
     private BillService billService;
@@ -28,6 +29,13 @@ public class BillController {
     public ResponseEntity<List<BillResponseDto>> getAllBills() {
         List<Bill> bills = billService.getAllBills();
         return ResponseEntity.ok(bills.stream().map(billMapper::toDto).toList());
+    }
+
+    @PostMapping
+    public ResponseEntity<BillResponseDto> crateBill(@Valid @RequestBody CreateBillRequestDto createBillRequestDto) {
+        Bill bill = billMapper.toDomain(createBillRequestDto);
+        Bill createdBill = billService.createBill(bill);
+        return ResponseEntity.ok(billMapper.toDto(createdBill));
     }
 
     @GetMapping("/by-order/{orderId}")

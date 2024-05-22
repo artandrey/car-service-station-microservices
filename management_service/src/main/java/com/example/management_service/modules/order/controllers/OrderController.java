@@ -3,6 +3,7 @@ package com.example.management_service.modules.order.controllers;
 import com.example.management_service.modules.order.dto.order.CreateOrderRequestDto;
 import com.example.management_service.modules.order.dto.order.OrderResponseDto;
 import com.example.management_service.modules.order.dto.order.UpdateOrderRequestDto;
+import com.example.management_service.modules.order.entities.CompletionStatus;
 import com.example.management_service.modules.order.entities.Order;
 import com.example.management_service.modules.order.mappers.OrderMapper;
 import com.example.management_service.modules.order.services.order.IOrderService;
@@ -18,7 +19,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("/api/orders")
+@RequestMapping("/orders/manager")
 public class OrderController {
     @Autowired
     private IOrderService orderService;
@@ -59,9 +60,11 @@ public class OrderController {
     }
 
     // TO-DO add order status update
-    @PostMapping("/{id}/status")
-    public ResponseEntity<OrderResponseDto> updateStatus(@PathVariable Long id) {
+    @PostMapping("/{id}/status/{status}")
+    public ResponseEntity<OrderResponseDto> updateStatus(@PathVariable Long id, @PathVariable CompletionStatus status) {
         Order order = orderService.getOrderById(id);
-        return ResponseEntity.ok(orderMapper.toDto(order));
+        order.setOrderStatus(status);
+        Order updatedOrder = orderService.updateOrder(id, order);
+        return ResponseEntity.ok(orderMapper.toDto(updatedOrder));
     }
 }

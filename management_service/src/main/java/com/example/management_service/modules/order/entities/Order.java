@@ -29,7 +29,7 @@ public class Order extends BaseEntity {
     private Car car;
 
     @Column(name = "client_id")
-    private Long clientId;
+    private String clientId;
 
     @CreationTimestamp
     @Column(name = "created_at", nullable = false, updatable = false)
