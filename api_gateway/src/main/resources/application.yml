@@ -1,6 +1,6 @@
 spring:
     application:
-        name: api_gateway
+        name: api-gateway
     security:
         oauth2:
             resourceserver:
@@ -24,8 +24,7 @@ spring:
                       - RewritePath=/management-service/swagger-ui/?(?<segment>.*), /swagger-ui/$\{segment}
                       - RewritePath=/management-service/swagger-resources/?(?<segment>.*), /swagger-resources/$\{segment}
                       - RewritePath=/management-service/v3/api-docs/?(?<segment>.*), /v3/api-docs/$\{segment}
-
-                - id: ai-service
+                - id: ai-assistant
                   uri: lb://ai-assistant
                   predicates:
                       - Path=/api/v1/ai/**
@@ -35,7 +34,6 @@ spring:
                       - RewritePath=/ai-service/swagger-ui/?(?<segment>.*), /swagger-ui/$\{segment}
                       - RewritePath=/ai-service/swagger-resources/?(?<segment>.*), /swagger-resources/$\{segment}
                       - RewritePath=/ai-service/v3/api-docs/?(?<segment>.*), /v3/api-docs/$\{segment}
-
                 - id: payment-service
                   uri: lb://payment-service
                   predicates:
@@ -46,7 +44,6 @@ spring:
                       - RewritePath=/payment-service/swagger-ui/?(?<segment>.*), /swagger-ui/$\{segment}
                       - RewritePath=/payment-service/swagger-resources/?(?<segment>.*), /swagger-resources/$\{segment}
                       - RewritePath=/payment-service/v3/api-docs/?(?<segment>.*), /v3/api-docs/$\{segment}
-
                 - id: knowledge-base
                   uri: lb://knowledge-base
                   predicates:
@@ -68,6 +65,8 @@ keycloak:
     admin: admin
     password: 1234
     secret: Ge9Hg14J0fajXyQnHRCWlU0gNsCcih4t
+    client: car-service
+    get-token-url: '${keycloak.url}/realms/car-service-realm/protocol/openid-connect/token'
 springdoc:
     api-docs:
         enabled: true
@@ -86,3 +85,6 @@ springdoc:
               name: AI Service
             - url: /knowledge-base/v3/api-docs
               name: Knowledge Base Service
+logging.level.root: INFO
+logging.level.org.springframework.cloud.gateway.route.RouteDefinitionRouteLocator: INFO
+logging.level.org.springframework.cloud.gateway: DEBUG

@@ -33,7 +33,7 @@ services:
       keycloak.realm: car-service-realm
       keycloak.client: car-service
       keycloak.admin: admin
-      keycloak.password: 123456
+      keycloak.password: 1234
       keycloak.secret: Ge9Hg14J0fajXyQnHRCWlU0gNsCcih4t
       keycloak.url: http://keycloak:9000
 
@@ -154,8 +154,8 @@ services:
     ports:
       - "9000:9000"
     environment:
-      KEYCLOAK_ADMIN: root
-      KEYCLOAK_ADMIN_PASSWORD: 123456
+      KEYCLOAK_ADMIN: admin
+      KEYCLOAK_ADMIN_PASSWORD: 1234
     volumes:
       - ./keycloak:/opt/keycloak/data/import
   ai_assistant:
