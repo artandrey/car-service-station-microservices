@@ -33,7 +33,7 @@ public class SecurityConfig {
                         .permitAll().pathMatchers("*/v3/api-docs/**", "*/swagger-ui/**", "*/swagger-resources/*")
                         .permitAll()
                         // for working with keycloak auth
-                        .anyExchange().authenticated()
+                        .anyExchange().permitAll()
                 // for working without a keycloak connection
                 // .anyRequest().permitAll()
 

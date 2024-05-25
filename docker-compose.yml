@@ -55,7 +55,7 @@ services:
       SPRING_DATASOURCE_USERNAME: root
       SPRING_DATASOURCE_PASSWORD: 123456
       eureka.client.serviceUrl.defaultZone: 'http://discovery-server:8081/eureka/'
-      gateway.url: ${GATEWAY_URL}
+      gateway.url: ${GATEWAY_URL}management-app/
 
   management_postgres:
     image: postgres:latest
@@ -84,7 +84,7 @@ services:
       SPRING_DATASOURCE_USERNAME: root
       SPRING_DATASOURCE_PASSWORD: 123456
       eureka.client.serviceUrl.defaultZone: 'http://discovery-server:8081/eureka/'
-      gateway.url: ${GATEWAY_URL}
+      gateway.url: ${GATEWAY_URL}payment/
 
   payment_postgres:
     image: postgres:latest
@@ -122,7 +122,7 @@ services:
       eureka.client.serviceUrl.defaultZone: 'http://discovery-server:8081/eureka/'
       spring.ai.openai.api-key: ${OPEN_AI_API_KEY}
       spring.data.mongodb.uri: mongodb://root:123456@knowledge-base-mongodb-filesore:27017/filestore?authSource=admin
-      gateway.url: ${GATEWAY_URL}
+      gateway.url: ${GATEWAY_URL}knowledge-base/
 
 
   knowledge_base_postgres:
@@ -179,7 +179,7 @@ services:
       SPRING_DATASOURCE_PASSWORD: 123456
       eureka.client.serviceUrl.defaultZone: 'http://discovery-server:8081/eureka/'
       spring.ai.openai.api-key: ${OPEN_AI_API_KEY}
-      gateway.url: ${GATEWAY_URL}
+      gateway.url: ${GATEWAY_URL}ai/
   ai_assistant_postgres:
     image: ankane/pgvector
     container_name: ai_assistant_postgres

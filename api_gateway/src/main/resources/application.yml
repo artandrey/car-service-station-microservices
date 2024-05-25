@@ -9,51 +9,43 @@ spring:
                     jwk-set-uri: ${spring.security.oauth2.resourceserver.jwt.issuer-uri}/protocol/openid-connect/certs
     cloud:
         gateway:
-            discovery:
-                locator:
-                    enabled: true
-                    lower-case-service-id: true
             routes:
                 - id: management-service
                   uri: lb://management-service
                   predicates:
-                      - Path=/api/v1/management/**
-                      - Path=/management-service/swagger-ui/**, /management-service/swagger-resources/**, /management-service/v3/api-docs/**
+                      - Path=/api/v1/management/**, /management-service/swagger-ui/**, /management-service/swagger-resources/**, /management-service/v3/api-docs/**
                   filters:
                       - RewritePath=/api/v1/management/?(?<segment>.*), /$\{segment}
                       - RewritePath=/management-service/swagger-ui/?(?<segment>.*), /swagger-ui/$\{segment}
                       - RewritePath=/management-service/swagger-resources/?(?<segment>.*), /swagger-resources/$\{segment}
-                      - RewritePath=/management-service/v3/api-docs/?(?<segment>.*), /v3/api-docs/$\{segment}
+                      - RewritePath=/management-service/v3/api-docs, /v3/api-docs
                 - id: ai-assistant
                   uri: lb://ai-assistant
                   predicates:
-                      - Path=/api/v1/ai/**
-                      - Path=/ai-service/swagger-ui/**, /ai-service/swagger-resources/**, /ai-service/v3/api-docs/**
+                      - Path=/api/v1/ai/**, /ai-service/swagger-ui/**, /ai-service/swagger-resources/**, /ai-service/v3/api-docs/**
                   filters:
                       - RewritePath=/api/v1/ai/?(?<segment>.*), /$\{segment}
                       - RewritePath=/ai-service/swagger-ui/?(?<segment>.*), /swagger-ui/$\{segment}
                       - RewritePath=/ai-service/swagger-resources/?(?<segment>.*), /swagger-resources/$\{segment}
-                      - RewritePath=/ai-service/v3/api-docs/?(?<segment>.*), /v3/api-docs/$\{segment}
+                      - RewritePath=/ai-service/v3/api-docs, /v3/api-docs
                 - id: payment-service
                   uri: lb://payment-service
                   predicates:
-                      - Path=/api/v1/payment/**
-                      - Path=/payment-service/swagger-ui/**, /payment-service/swagger-resources/**, /payment-service/v3/api-docs/**
+                      - Path=/api/v1/payment/**, /payment-service/swagger-ui/**, /payment-service/swagger-resources/**, /payment-service/v3/api-docs/**
                   filters:
                       - RewritePath=/api/v1/payment/?(?<segment>.*), /$\{segment}
                       - RewritePath=/payment-service/swagger-ui/?(?<segment>.*), /swagger-ui/$\{segment}
                       - RewritePath=/payment-service/swagger-resources/?(?<segment>.*), /swagger-resources/$\{segment}
-                      - RewritePath=/payment-service/v3/api-docs/?(?<segment>.*), /v3/api-docs/$\{segment}
+                      - RewritePath=/payment-service/v3/api-docs, /v3/api-docs
                 - id: knowledge-base
                   uri: lb://knowledge-base
                   predicates:
-                      - Path=/api/v1/knowledge-base/**
-                      - Path=/knowledge-base/swagger-ui/**, /knowledge-base/swagger-resources/**, /knowledge-base/v3/api-docs/**
+                      - Path=/api/v1/knowledge-base/**, /knowledge-base/swagger-ui/**, /knowledge-base/swagger-resources/**, /knowledge-base/v3/api-docs/**
                   filters:
                       - RewritePath=/api/v1/knowledge-base/?(?<segment>.*), /$\{segment}
                       - RewritePath=/knowledge-base/swagger-ui/?(?<segment>.*), /swagger-ui/$\{segment}
                       - RewritePath=/knowledge-base/swagger-resources/?(?<segment>.*), /swagger-resources/$\{segment}
-                      - RewritePath=/knowledge-base/v3/api-docs/?(?<segment>.*), /v3/api-docs/$\{segment}
+                      - RewritePath=/knowledge-base/v3/api-docs, /v3/api-docs
 
 eureka:
     client:

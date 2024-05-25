@@ -7,7 +7,6 @@ import javax.validation.Valid;
 
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestHeader;
@@ -32,37 +31,36 @@ import lombok.AllArgsConstructor;
 @AllArgsConstructor
 public class ChatController {
 
-    private final ChatService chatService;
-    private final ChatMessageMapper chatMessageMapper;
-    private final IAiChatService aiResponseService;
+        private final ChatService chatService;
+        private final ChatMessageMapper chatMessageMapper;
+        private final IAiChatService aiResponseService;
 
-    @Operation(summary = "Get user chat history", description = "Retrieve chat history with AI for a specific user.")
-    @ApiResponses(value = {
-            @ApiResponse(responseCode = "200", description = "Successfully retrieved messages"),
-    })
-    @GetMapping("/chat/messages/{userId}")
-    public List<ChatMessageResponseDto> getUserMessages(
-            @PathVariable String userId,
-            @RequestHeader("Authorization") String authorization) {
-        String identityUserId = JwtUtil.mapJwtToUser(authorization).getSid();
-        return chatService.getMessagesByUserId(identityUserId)
-                .stream()
-                .map(chatMessageMapper::toDto)
-                .collect(Collectors.toList());
-    }
+        @Operation(summary = "Get user chat history", description = "Retrieve chat history with AI for a specific user.")
+        @ApiResponses(value = {
+                        @ApiResponse(responseCode = "200", description = "Successfully retrieved messages"),
+        })
+        @GetMapping("/chat/messages/{userId}")
+        public List<ChatMessageResponseDto> getUserMessages(
+                        @RequestHeader(value = "Authorization", required = false) String authorization) {
+                String identityUserId = JwtUtil.mapJwtToUser(authorization).getSid();
+                return chatService.getMessagesByUserId(identityUserId)
+                                .stream()
+                                .map(chatMessageMapper::toDto)
+                                .collect(Collectors.toList());
+        }
 
-    @Operation(summary = "Retrieve response", description = "Post a chat message and retrieve response to the message from AI")
-    @ApiResponses(value = {
-            @ApiResponse(responseCode = "200", description = "Successfully posted message"),
-            @ApiResponse(responseCode = "400", description = "Bad request"),
-    })
-    @PostMapping("/message")
-    public ResponseEntity<ChatMessageResponseDto> postMessage(
-            @Valid @RequestBody ChatMessageRequestDto chatMessageRequestDto,
-            @RequestHeader("Authorization") String authorization) {
-        String userId = JwtUtil.mapJwtToUser(authorization).getSid();
-        AppChatMessage userMessage = chatMessageMapper.fromDto(chatMessageRequestDto, userId);
-        AppChatMessage responseMessage = aiResponseService.createStringResponse(userMessage);
-        return ResponseEntity.ok(chatMessageMapper.toDto(responseMessage));
-    }
+        @Operation(summary = "Retrieve response", description = "Post a chat message and retrieve response to the message from AI")
+        @ApiResponses(value = {
+                        @ApiResponse(responseCode = "200", description = "Successfully posted message"),
+                        @ApiResponse(responseCode = "400", description = "Bad request"),
+        })
+        @PostMapping("/message")
+        public ResponseEntity<ChatMessageResponseDto> postMessage(
+                        @Valid @RequestBody ChatMessageRequestDto chatMessageRequestDto,
+                        @RequestHeader(value = "Authorization", required = false) String authorization) {
+                String userId = JwtUtil.mapJwtToUser(authorization).getSid();
+                AppChatMessage userMessage = chatMessageMapper.fromDto(chatMessageRequestDto, userId);
+                AppChatMessage responseMessage = aiResponseService.createStringResponse(userMessage);
+                return ResponseEntity.ok(chatMessageMapper.toDto(responseMessage));
+        }
 }

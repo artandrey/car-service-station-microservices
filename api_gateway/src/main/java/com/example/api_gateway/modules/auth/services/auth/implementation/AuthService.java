@@ -59,7 +59,7 @@ public class AuthService implements IAuthService {
     public AuthResult signUp(SignUpCredentials credentials) {
         UserRepresentation userRepresentation = getUserRepresentation(credentials);
         UsersResource usersResource = getUsersResource();
-
+        userRepresentation.getClientRoles().put(keycloakClientId, List.of("ROLE_CLIENT"));
         try (Response response = usersResource.create(userRepresentation)) {
 
             if (response.getStatus() == Response.Status.CREATED.getStatusCode()) {
