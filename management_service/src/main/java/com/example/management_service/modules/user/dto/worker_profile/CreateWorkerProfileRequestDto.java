@@ -1,25 +1,26 @@
 package com.example.management_service.modules.user.dto.worker_profile;
 
+import io.swagger.v3.oas.annotations.media.Schema;
+import jakarta.validation.constraints.NotNull;
 import lombok.Data;
 
 import java.util.Date;
 
-import jakarta.validation.constraints.NotNull;
-
 @Data
 public class CreateWorkerProfileRequestDto {
     @NotNull
-    private Long userId;
+    @Schema(description = "The ID of the user associated with the worker profile", required = true)
+    private String userId;
 
     @NotNull
+    @Schema(description = "The ID of the worker position", required = true)
     private Long positionId;
-    @NotNull
 
+    @NotNull
+    @Schema(description = "The date of hiring", required = true)
     private Date hireDate;
-    @NotNull
 
-    private Date fireDate;
     @NotNull
-
+    @Schema(description = "The salary of the worker", required = true)
     private double salary;
 }

@@ -7,6 +7,9 @@ import com.example.management_service.modules.user.entities.WorkerPosition;
 import com.example.management_service.modules.user.mappers.WorkerPositionMapper;
 import com.example.management_service.modules.user.services.worker_position.IWorkerPositionService;
 
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.tags.Tag;
+
 import jakarta.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,7 +20,8 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("/api/worker-positions")
+@RequestMapping("/worker-positions")
+@Tag(name = "Worker Positions", description = "Endpoints for managing worker positions")
 public class WorkerPositionController {
     @Autowired
     private IWorkerPositionService workerPositionService;
@@ -26,18 +30,21 @@ public class WorkerPositionController {
     private WorkerPositionMapper workerPositionMapper;
 
     @GetMapping
+    @Operation(summary = "Get all worker positions", description = "Retrieve a list of all worker positions.")
     public ResponseEntity<List<WorkerPositionResponseDto>> getAllWorkerPositions() {
         List<WorkerPosition> workerPositions = workerPositionService.getAllWorkerPositions();
         return ResponseEntity.ok(workerPositionMapper.toDto(workerPositions));
     }
 
     @GetMapping("/{id}")
+    @Operation(summary = "Get worker position by ID", description = "Retrieve a worker position by its ID.")
     public ResponseEntity<WorkerPositionResponseDto> getWorkerPositionById(@PathVariable Long id) {
         WorkerPosition workerPosition = workerPositionService.getWorkerPositionById(id);
         return ResponseEntity.ok(workerPositionMapper.toDto(workerPosition));
     }
 
     @PostMapping
+    @Operation(summary = "Create a new worker position", description = "Create a new worker position.")
     public ResponseEntity<WorkerPositionResponseDto> createWorkerPosition(
             @Valid @RequestBody CreateWorkerPositionRequestDto requestDto) {
         WorkerPosition workerPosition = workerPositionService
@@ -46,6 +53,7 @@ public class WorkerPositionController {
     }
 
     @PatchMapping("/{id}")
+    @Operation(summary = "Update worker position", description = "Update an existing worker position.")
     public ResponseEntity<WorkerPositionResponseDto> updateWorkerPosition(@PathVariable Long id,
             @Valid @RequestBody UpdateWorkerPositionRequestDto requestDto) {
         WorkerPosition updatedWorkerPosition = workerPositionService.updateWorkerPosition(id,
@@ -54,6 +62,7 @@ public class WorkerPositionController {
     }
 
     @DeleteMapping("/{id}")
+    @Operation(summary = "Delete worker position", description = "Delete a worker position by its ID.")
     public ResponseEntity<Void> deleteWorkerPosition(@PathVariable Long id) {
         workerPositionService.deleteWorkerPosition(id);
         return ResponseEntity.noContent().build();

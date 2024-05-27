@@ -5,14 +5,18 @@ import com.example.management_service.modules.user.exceptions.WorkerProfileNotFo
 import com.example.management_service.modules.user.mappers.WorkerProfileMapper;
 import com.example.management_service.modules.user.repository.WorkerProfileRepository;
 import com.example.management_service.modules.user.services.worker_profile.IWorkerProfileService;
+
+import lombok.AllArgsConstructor;
+
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 
 @Service
+@AllArgsConstructor
 public class WorkerProfileService implements IWorkerProfileService {
-    private WorkerProfileRepository workerProfileRepository;
-    private WorkerProfileMapper workerProfileMapper;
+    private final WorkerProfileRepository workerProfileRepository;
+    private final WorkerProfileMapper workerProfileMapper;
 
     @Override
     public List<WorkerProfile> getAllWorkerProfiles() {

@@ -1,6 +1,6 @@
 spring:
     application:
-        name: api_gateway
+        name: api-gateway
     security:
         oauth2:
             resourceserver:
@@ -9,23 +9,43 @@ spring:
                     jwk-set-uri: ${spring.security.oauth2.resourceserver.jwt.issuer-uri}/protocol/openid-connect/certs
     cloud:
         gateway:
-            discovery:
-                locator:
-                    enabled: true
-                    lower-case-service-id: true
             routes:
                 - id: management-service
                   uri: lb://management-service
                   predicates:
-                      - Path=/api/v1/management/**
+                      - Path=/api/v1/management-app/**, /management-service/swagger-ui/**, /management-service/swagger-resources/**, /management-service/v3/api-docs/**
                   filters:
-                      - RewritePath=/api/v1/management/?(?<segment>.*), /$\{segment}
-                - id: echo
-                  uri: https://echo.zuplo.io/
+                      - RewritePath=/api/v1/management-app/?(?<segment>.*), /$\{segment}
+                      - RewritePath=/management-service/swagger-ui/?(?<segment>.*), /swagger-ui/$\{segment}
+                      - RewritePath=/management-service/swagger-resources/?(?<segment>.*), /swagger-resources/$\{segment}
+                      - RewritePath=/management-service/v3/api-docs, /v3/api-docs
+                - id: ai-assistant
+                  uri: lb://ai-assistant
                   predicates:
-                      - Path=/api/v1/echo/**
+                      - Path=/api/v1/ai/**, /ai-service/swagger-ui/**, /ai-service/swagger-resources/**, /ai-service/v3/api-docs/**
                   filters:
-                      - RewritePath=/api/v1/echo/?(?<segment>.*), /$\{segment}
+                      - RewritePath=/api/v1/ai/?(?<segment>.*), /$\{segment}
+                      - RewritePath=/ai-service/swagger-ui/?(?<segment>.*), /swagger-ui/$\{segment}
+                      - RewritePath=/ai-service/swagger-resources/?(?<segment>.*), /swagger-resources/$\{segment}
+                      - RewritePath=/ai-service/v3/api-docs, /v3/api-docs
+                - id: payment-service
+                  uri: lb://payment-service
+                  predicates:
+                      - Path=/api/v1/payment/**, /payment-service/swagger-ui/**, /payment-service/swagger-resources/**, /payment-service/v3/api-docs/**
+                  filters:
+                      - RewritePath=/api/v1/payment/?(?<segment>.*), /$\{segment}
+                      - RewritePath=/payment-service/swagger-ui/?(?<segment>.*), /swagger-ui/$\{segment}
+                      - RewritePath=/payment-service/swagger-resources/?(?<segment>.*), /swagger-resources/$\{segment}
+                      - RewritePath=/payment-service/v3/api-docs, /v3/api-docs
+                - id: knowledge-base
+                  uri: lb://knowledge-base
+                  predicates:
+                      - Path=/api/v1/knowledge-base/**, /knowledge-base/swagger-ui/**, /knowledge-base/swagger-resources/**, /knowledge-base/v3/api-docs/**
+                  filters:
+                      - RewritePath=/api/v1/knowledge-base/?(?<segment>.*), /$\{segment}
+                      - RewritePath=/knowledge-base/swagger-ui/?(?<segment>.*), /swagger-ui/$\{segment}
+                      - RewritePath=/knowledge-base/swagger-resources/?(?<segment>.*), /swagger-resources/$\{segment}
+                      - RewritePath=/knowledge-base/v3/api-docs, /v3/api-docs
 
 eureka:
     client:
@@ -37,3 +57,26 @@ keycloak:
     admin: admin
     password: 1234
     secret: Ge9Hg14J0fajXyQnHRCWlU0gNsCcih4t
+    client: car-service
+    get-token-url: '${keycloak.url}/realms/car-service-realm/protocol/openid-connect/token'
+springdoc:
+    api-docs:
+        enabled: true
+        path: /v3/api-docs
+    swagger-ui:
+        enabled: true
+        path: /swagger-ui/index.html
+        urls:
+            - url: /v3/api-docs
+              name: API Gateway Service
+            - url: /management-service/v3/api-docs
+              name: Management Service
+            - url: /payment-service/v3/api-docs
+              name: Payment Service
+            - url: /ai-service/v3/api-docs
+              name: AI Service
+            - url: /knowledge-base/v3/api-docs
+              name: Knowledge Base Service
+logging.level.root: INFO
+logging.level.org.springframework.cloud.gateway.route.RouteDefinitionRouteLocator: INFO
+logging.level.org.springframework.cloud.gateway: DEBUG

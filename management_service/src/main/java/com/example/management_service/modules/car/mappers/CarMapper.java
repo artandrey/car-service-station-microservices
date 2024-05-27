@@ -20,6 +20,8 @@ public class CarMapper {
         this.modelMapper.createTypeMap(CreateCarRequestDto.class, Car.class)
                 .addMappings(map -> map.using(ConverterService.idToEntity(CarModel::new))
                         .map(CreateCarRequestDto::getCarModelId, Car::setCarModel));
+        this.modelMapper.createTypeMap(Car.class, CarResponseDto.class)
+                .addMappings(map -> map.map(src -> src.getCarModel().getId(), CarResponseDto::setCarModelId));
     }
 
     public Car toEntity(CreateCarRequestDto createCarRequestDto) {

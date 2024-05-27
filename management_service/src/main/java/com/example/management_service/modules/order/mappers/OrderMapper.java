@@ -16,6 +16,8 @@ public class OrderMapper {
 
     public OrderMapper(ModelMapper modelMapper) {
         this.modelMapper = modelMapper;
+        this.modelMapper.createTypeMap(Order.class, OrderResponseDto.class)
+                .addMappings(map -> map.map(src -> src.getCar().getId(), OrderResponseDto::setCarId));
     }
 
     public Order toEntity(CreateOrderRequestDto requestDto) {

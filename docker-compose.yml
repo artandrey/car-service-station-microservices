@@ -33,7 +33,7 @@ services:
       keycloak.realm: car-service-realm
       keycloak.client: car-service
       keycloak.admin: admin
-      keycloak.password: 123456
+      keycloak.password: 1234
       keycloak.secret: Ge9Hg14J0fajXyQnHRCWlU0gNsCcih4t
       keycloak.url: http://keycloak:9000
 
@@ -55,6 +55,8 @@ services:
       SPRING_DATASOURCE_USERNAME: root
       SPRING_DATASOURCE_PASSWORD: 123456
       eureka.client.serviceUrl.defaultZone: 'http://discovery-server:8081/eureka/'
+      gateway.url: ${GATEWAY_URL}management-app/
+
   management_postgres:
     image: postgres:latest
     container_name: management_postgres
@@ -82,6 +84,8 @@ services:
       SPRING_DATASOURCE_USERNAME: root
       SPRING_DATASOURCE_PASSWORD: 123456
       eureka.client.serviceUrl.defaultZone: 'http://discovery-server:8081/eureka/'
+      gateway.url: ${GATEWAY_URL}payment/
+
   payment_postgres:
     image: postgres:latest
     container_name: payment_postgres
@@ -118,6 +122,8 @@ services:
       eureka.client.serviceUrl.defaultZone: 'http://discovery-server:8081/eureka/'
       spring.ai.openai.api-key: ${OPEN_AI_API_KEY}
       spring.data.mongodb.uri: mongodb://root:123456@knowledge-base-mongodb-filesore:27017/filestore?authSource=admin
+      gateway.url: ${GATEWAY_URL}knowledge-base/
+
 
   knowledge_base_postgres:
     image: ankane/pgvector
@@ -148,8 +154,8 @@ services:
     ports:
       - "9000:9000"
     environment:
-      KEYCLOAK_ADMIN: root
-      KEYCLOAK_ADMIN_PASSWORD: 123456
+      KEYCLOAK_ADMIN: admin
+      KEYCLOAK_ADMIN_PASSWORD: 1234
     volumes:
       - ./keycloak:/opt/keycloak/data/import
   ai_assistant:
@@ -173,6 +179,7 @@ services:
       SPRING_DATASOURCE_PASSWORD: 123456
       eureka.client.serviceUrl.defaultZone: 'http://discovery-server:8081/eureka/'
       spring.ai.openai.api-key: ${OPEN_AI_API_KEY}
+      gateway.url: ${GATEWAY_URL}ai/
   ai_assistant_postgres:
     image: ankane/pgvector
     container_name: ai_assistant_postgres

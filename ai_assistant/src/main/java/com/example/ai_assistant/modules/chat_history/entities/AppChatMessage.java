@@ -33,7 +33,7 @@ public class AppChatMessage {
     private String content;
 
     @Column(name = "user_id")
-    private String userId;
+    private String chatOwnerId;
 
     @Column(name = "is_bot")
     private Boolean isBot;

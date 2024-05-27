@@ -10,6 +10,6 @@ import lombok.NoArgsConstructor;
 public class FileRecord {
     private String filePath;
     private String mimeType;
-    private String fileSize;
+    private Integer fileSize;
     private byte[] fileContent;
 }

@@ -10,7 +10,10 @@ import lombok.NoArgsConstructor;
 
 import jakarta.persistence.*;
 import java.util.Date;
+import java.util.HashSet;
 import java.util.Set;
+
+import org.hibernate.annotations.CreationTimestamp;
 
 @Entity
 @AllArgsConstructor
@@ -24,8 +27,9 @@ public class OrderTask extends BaseEntity {
     private CompletionStatus taskStatus;
 
     @Column(name = "work_price")
-    private double workPrice;
+    private Double workPrice;
 
+    @CreationTimestamp
     @Column(name = "created_at")
     private Date createdAt;
 
@@ -38,15 +42,15 @@ public class OrderTask extends BaseEntity {
     @Column(name = "title")
     private String title;
 
-    @ManyToMany
+    @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(name = "order_task_car_part", joinColumns = @JoinColumn(name = "order_task_id"), inverseJoinColumns = @JoinColumn(name = "car_part_id"))
-    private Set<CarPart> usedParts;
+    private Set<CarPart> usedParts = new HashSet<>();
 
-    @ManyToMany
+    @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(name = "order_task_worker_profile", joinColumns = @JoinColumn(name = "order_task_id"), inverseJoinColumns = @JoinColumn(name = "worker_profile_id"))
-    private Set<WorkerProfile> assignedTo;
+    private Set<WorkerProfile> assignedTo = new HashSet<>();
 
-    @ManyToOne(targetEntity = Order.class)
+    @ManyToOne(targetEntity = Order.class, fetch = FetchType.EAGER)
     @JoinColumn(name = "order_id", referencedColumnName = "id")
     private Order order;
 

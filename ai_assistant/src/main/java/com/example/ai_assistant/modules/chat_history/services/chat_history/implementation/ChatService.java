@@ -22,7 +22,7 @@ public class ChatService implements IChatService {
     }
 
     @Override
-    public List<AppChatMessage> getMessagesByUserId(String userId) {
-        return chatMessageRepository.findByUserId(userId);
+    public List<AppChatMessage> getMessagesByOwnerUserId(String userId) {
+        return chatMessageRepository.findByChatOwnerId(userId);
     }
 }

@@ -6,14 +6,17 @@ import com.example.management_service.modules.user.mappers.WorkerPositionMapper;
 import com.example.management_service.modules.user.repository.WorkerPositionRepository;
 import com.example.management_service.modules.user.services.worker_position.IWorkerPositionService;
 
+import lombok.AllArgsConstructor;
+
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 
 @Service
+@AllArgsConstructor
 public class WorkerPositionService implements IWorkerPositionService {
-    private WorkerPositionRepository workerPositionRepository;
-    private WorkerPositionMapper workerPositionMapper;
+    private final WorkerPositionRepository workerPositionRepository;
+    private final WorkerPositionMapper workerPositionMapper;
 
     @Override
     public List<WorkerPosition> getAllWorkerPositions() {

@@ -12,6 +12,9 @@ import org.springframework.web.bind.annotation.RestController;
 import com.example.knowledge_base.modules.documents_upload.dto.DocumentResponseDto;
 import com.example.knowledge_base.modules.documents_upload.mapper.DocumentMapper;
 import com.example.knowledge_base.modules.documents_upload.services.similarity_search.ISimilaritySearchService;
+
+import io.swagger.v3.oas.annotations.Hidden;
+
 import javax.validation.constraints.Max;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
@@ -26,6 +29,7 @@ public class SimilaritySearchController {
     private final ISimilaritySearchService similaritySearchService;
     private final DocumentMapper documentMapper;
 
+    @Hidden
     @GetMapping
     public ResponseEntity<List<DocumentResponseDto>> similaritySearch(
             @NotNull @RequestParam @Size(max = 10000, message = "Query length must be less than or equal to 10000") String query,

@@ -22,7 +22,7 @@ public class ChatMessageMapper {
     public AppChatMessage fromDto(ChatMessageRequestDto chatMessageRequestDto, String userId) {
         AppChatMessage chatMessage = modelMapper.map(chatMessageRequestDto, AppChatMessage.class);
         chatMessage.setIsBot(false);
-        chatMessage.setUserId(userId);
+        chatMessage.setChatOwnerId(userId);
         return chatMessage;
     }
 
