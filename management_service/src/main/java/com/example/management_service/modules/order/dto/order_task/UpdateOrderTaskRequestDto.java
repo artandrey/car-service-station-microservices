@@ -16,7 +16,7 @@ public class UpdateOrderTaskRequestDto {
     private CompletionStatus taskStatus;
 
     @Schema(description = "Price for the work")
-    private double workPrice;
+    private Double workPrice;
 
     @Schema(description = "Date when the task was created")
     private Date createdAt;

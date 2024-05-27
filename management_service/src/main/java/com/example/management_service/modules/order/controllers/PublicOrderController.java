@@ -19,7 +19,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("/orders")
+@RequestMapping("/public/orders")
 @Tag(name = "Public Orders", description = "APIs to retrieve public orders")
 public class PublicOrderController {
 

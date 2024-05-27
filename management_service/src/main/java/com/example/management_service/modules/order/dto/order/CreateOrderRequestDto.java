@@ -15,7 +15,7 @@ public class CreateOrderRequestDto {
 
     @NotNull
     @Schema(description = "ID of the client who placed the order", required = true)
-    private Long clientId;
+    private String clientId;
 
     @NotBlank
     @NotNull

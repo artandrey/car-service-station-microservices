@@ -3,7 +3,10 @@ package com.example.management_service.modules.user.mappers;
 import com.example.management_service.modules.user.dto.worker_position.CreateWorkerPositionRequestDto;
 import com.example.management_service.modules.user.dto.worker_position.UpdateWorkerPositionRequestDto;
 import com.example.management_service.modules.user.dto.worker_position.WorkerPositionResponseDto;
+import com.example.management_service.modules.user.dto.worker_profile.WorkerProfileResponseDto;
 import com.example.management_service.modules.user.entities.WorkerPosition;
+import com.example.management_service.modules.user.entities.WorkerProfile;
+
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Component;
 
@@ -16,6 +19,8 @@ public class WorkerPositionMapper {
 
     public WorkerPositionMapper(ModelMapper modelMapper) {
         this.modelMapper = modelMapper;
+        this.modelMapper.createTypeMap(WorkerProfile.class, WorkerProfileResponseDto.class)
+                .addMappings(map -> map.map(src -> src.getPosition().getId(), WorkerProfileResponseDto::setPositionId));
     }
 
     public WorkerPosition toEntity(CreateWorkerPositionRequestDto requestDto) {

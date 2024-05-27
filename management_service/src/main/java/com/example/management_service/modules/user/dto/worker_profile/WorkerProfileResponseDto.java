@@ -11,7 +11,7 @@ public class WorkerProfileResponseDto {
     private Long id;
 
     @Schema(description = "The ID of the user associated with the worker profile")
-    private Long userId;
+    private String userId;
 
     @Schema(description = "The ID of the worker position")
     private Long positionId;

@@ -9,5 +9,5 @@ import com.example.ai_assistant.modules.chat_history.entities.AppChatMessage;
 
 @Repository
 public interface ChatMessageRepository extends JpaRepository<AppChatMessage, Long> {
-    List<AppChatMessage> findByUserId(String userId);
+    List<AppChatMessage> findByChatOwnerId(String ownerId);
 }

@@ -32,7 +32,7 @@ public class FileRecordMapper {
 
             fileRecord.setMimeType(gridFSFile.getMetadata().get("_contentType").toString());
 
-            fileRecord.setFileSize(gridFSFile.getMetadata().get("fileSize").toString());
+            fileRecord.setFileSize((Integer) gridFSFile.getMetadata().get("fileSize"));
         }
 
         return fileRecord;

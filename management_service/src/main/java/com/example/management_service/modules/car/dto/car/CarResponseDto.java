@@ -13,7 +13,7 @@ public class CarResponseDto {
     private Long carModelId;
 
     @Schema(description = "The unique identifier of the owner", example = "1001")
-    private Long ownerId;
+    private String ownerId;
 
     @Schema(description = "The Vehicle Identification Number (VIN) code of the car", example = "1HGCM82633A123456")
     private String vinCode;

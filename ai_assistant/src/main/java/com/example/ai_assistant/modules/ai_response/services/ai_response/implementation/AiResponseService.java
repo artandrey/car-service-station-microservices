@@ -32,9 +32,9 @@ public class AiResponseService implements IAiChatService {
     @Override
     public AppChatMessage createStringResponse(AppChatMessage userMessage) {
         String query = userMessage.getContent();
-        String userId = userMessage.getUserId();
-        chatService.createMessage(AppChatMessage.builder().content(query).isBot(false).userId(userId).build());
-        var chatHistory = chatService.getMessagesByUserId(userId);
+        String userId = userMessage.getChatOwnerId();
+        chatService.createMessage(AppChatMessage.builder().content(query).isBot(false).chatOwnerId(userId).build());
+        var chatHistory = chatService.getMessagesByOwnerUserId(userId);
         List<Document> searchResult = knowledgeBaseService.search(query);
         ChatResponse chatResponse = chatClient.call(new Prompt(List.<Message>of(
                 new ChatMessage(MessageType.SYSTEM, getSystemPrompt(searchResult, chatHistory)),
@@ -42,7 +42,7 @@ public class AiResponseService implements IAiChatService {
                 new ChatMessage(MessageType.USER, query))));
 
         String aiResponse = chatResponse.getResult().getOutput().getContent();
-        chatService.createMessage(AppChatMessage.builder().content(aiResponse).isBot(true).build());
+        chatService.createMessage(AppChatMessage.builder().content(aiResponse).chatOwnerId(userId).isBot(true).build());
 
         return AppChatMessage.builder().content(aiResponse).isBot(true).createdAt(new Date()).build();
     }
@@ -70,6 +70,7 @@ public class AiResponseService implements IAiChatService {
                         3. Try your best to answer to user's question.
                         4. Don't provide information that is not mentioned inside of result XML tag.
                         5. If you don't have enough information to answer the question, you should explain this to user.
+                        6. Response should be brief: maximum 3 sentences.
                             <result>{0}</result>
                         Currently you are having a conversation with user:
                         {1}

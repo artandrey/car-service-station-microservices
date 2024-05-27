@@ -22,7 +22,7 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 import java.util.List;
 
 @RestController
-@RequestMapping("/api/order-tasks")
+@RequestMapping("/order-tasks")
 @Tag(name = "Order Tasks", description = "APIs to manage order tasks")
 public class OrderTaskController {
 

@@ -21,7 +21,7 @@ import java.util.Date;
 public class WorkerProfile extends BaseEntity {
 
     @Column(name = "user_id")
-    private Long userId;
+    private String userId;
 
     @ManyToOne
     @JoinColumn(name = "position_id")

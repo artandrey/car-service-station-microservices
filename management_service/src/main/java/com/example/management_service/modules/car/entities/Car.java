@@ -30,7 +30,7 @@ public class Car extends BaseEntity {
     private CarModel carModel;
 
     @Column(name = "owner_id")
-    private Long ownerId;
+    private String ownerId;
     @Column(name = "vin_code")
     private String vinCode;
     @Column(name = "color")

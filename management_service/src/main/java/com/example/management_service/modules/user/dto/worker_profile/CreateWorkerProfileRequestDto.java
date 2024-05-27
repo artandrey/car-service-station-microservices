@@ -10,7 +10,7 @@ import java.util.Date;
 public class CreateWorkerProfileRequestDto {
     @NotNull
     @Schema(description = "The ID of the user associated with the worker profile", required = true)
-    private Long userId;
+    private String userId;
 
     @NotNull
     @Schema(description = "The ID of the worker position", required = true)
@@ -19,10 +19,6 @@ public class CreateWorkerProfileRequestDto {
     @NotNull
     @Schema(description = "The date of hiring", required = true)
     private Date hireDate;
-
-    @NotNull
-    @Schema(description = "The date of termination", required = true)
-    private Date fireDate;
 
     @NotNull
     @Schema(description = "The salary of the worker", required = true)

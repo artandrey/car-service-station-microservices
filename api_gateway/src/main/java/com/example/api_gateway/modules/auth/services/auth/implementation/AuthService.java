@@ -1,6 +1,7 @@
 package com.example.api_gateway.modules.auth.services.auth.implementation;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -59,7 +60,8 @@ public class AuthService implements IAuthService {
     public AuthResult signUp(SignUpCredentials credentials) {
         UserRepresentation userRepresentation = getUserRepresentation(credentials);
         UsersResource usersResource = getUsersResource();
-        userRepresentation.getClientRoles().put(keycloakClientId, List.of("ROLE_CLIENT"));
+        userRepresentation.setGroups(List.of("Clients"));
+
         try (Response response = usersResource.create(userRepresentation)) {
 
             if (response.getStatus() == Response.Status.CREATED.getStatusCode()) {

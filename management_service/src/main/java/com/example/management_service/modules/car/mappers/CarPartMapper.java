@@ -3,7 +3,10 @@ package com.example.management_service.modules.car.mappers;
 import com.example.management_service.modules.car.dto.car_part.CarPartResponseDto;
 import com.example.management_service.modules.car.dto.car_part.CreateCarPartRequestDto;
 import com.example.management_service.modules.car.dto.car_part.UpdateCarPartRequestDto;
+import com.example.management_service.modules.car.entities.CarModel;
 import com.example.management_service.modules.car.entities.CarPart;
+import com.example.management_service.shared.services.ConverterService;
+
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Component;
 
@@ -16,6 +19,10 @@ public class CarPartMapper {
 
     public CarPartMapper(ModelMapper modelMapper) {
         this.modelMapper = modelMapper;
+        this.modelMapper.createTypeMap(CreateCarPartRequestDto.class, CarPart.class)
+                .addMappings(mapper -> mapper.using(ConverterService.idsToEntities(CarModel::new))
+                        .map(CreateCarPartRequestDto::getModels, CarPart::setCarModels));
+
     }
 
     public CarPart toEntity(CreateCarPartRequestDto requestDto) {

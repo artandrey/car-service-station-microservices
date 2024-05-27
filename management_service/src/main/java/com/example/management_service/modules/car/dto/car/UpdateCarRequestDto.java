@@ -14,7 +14,7 @@ public class UpdateCarRequestDto {
 
     @NotNull
     @Schema(description = "The unique identifier of the owner")
-    private Long ownerId;
+    private String ownerId;
 
     @NotNull
     @Size(min = 17, max = 17)

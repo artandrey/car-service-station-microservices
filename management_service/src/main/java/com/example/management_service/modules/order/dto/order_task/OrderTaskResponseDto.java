@@ -19,7 +19,7 @@ public class OrderTaskResponseDto {
     private CompletionStatus taskStatus;
 
     @Schema(description = "Price for the work")
-    private double workPrice;
+    private Double workPrice;
 
     @Schema(description = "Date when the task was created")
     private Date createdAt;
@@ -41,4 +41,7 @@ public class OrderTaskResponseDto {
 
     @Schema(description = "ID of the order associated with the task")
     private Long orderId;
+
+    @Schema(description = "ID of the client")
+    private String clientId;
 }

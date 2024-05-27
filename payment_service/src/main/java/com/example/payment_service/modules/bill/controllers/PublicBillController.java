@@ -19,7 +19,7 @@ import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import org.springframework.http.MediaType;
 
 @RestController
-@RequestMapping("/bills")
+@RequestMapping("/public/bills")
 public class PublicBillController {
 
     @Autowired

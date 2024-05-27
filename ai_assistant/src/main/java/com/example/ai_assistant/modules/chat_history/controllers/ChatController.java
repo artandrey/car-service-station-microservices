@@ -39,11 +39,11 @@ public class ChatController {
         @ApiResponses(value = {
                         @ApiResponse(responseCode = "200", description = "Successfully retrieved messages"),
         })
-        @GetMapping("/chat/messages/{userId}")
+        @GetMapping("/chat/messages")
         public List<ChatMessageResponseDto> getUserMessages(
                         @RequestHeader(value = "Authorization", required = false) String authorization) {
                 String identityUserId = JwtUtil.mapJwtToUser(authorization).getSid();
-                return chatService.getMessagesByUserId(identityUserId)
+                return chatService.getMessagesByOwnerUserId(identityUserId)
                                 .stream()
                                 .map(chatMessageMapper::toDto)
                                 .collect(Collectors.toList());

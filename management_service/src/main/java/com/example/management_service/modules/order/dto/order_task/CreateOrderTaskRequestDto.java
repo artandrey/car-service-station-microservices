@@ -21,10 +21,7 @@ public class CreateOrderTaskRequestDto {
 
     @NotNull
     @Schema(description = "Price for the work", required = true)
-    private double workPrice;
-
-    @Schema(description = "Date when the task was created")
-    private Date createdAt;
+    private Double workPrice;
 
     @Schema(description = "Date when the task was started")
     private Date startedAt;

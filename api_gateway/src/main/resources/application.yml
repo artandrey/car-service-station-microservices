@@ -13,9 +13,9 @@ spring:
                 - id: management-service
                   uri: lb://management-service
                   predicates:
-                      - Path=/api/v1/management/**, /management-service/swagger-ui/**, /management-service/swagger-resources/**, /management-service/v3/api-docs/**
+                      - Path=/api/v1/management-app/**, /management-service/swagger-ui/**, /management-service/swagger-resources/**, /management-service/v3/api-docs/**
                   filters:
-                      - RewritePath=/api/v1/management/?(?<segment>.*), /$\{segment}
+                      - RewritePath=/api/v1/management-app/?(?<segment>.*), /$\{segment}
                       - RewritePath=/management-service/swagger-ui/?(?<segment>.*), /swagger-ui/$\{segment}
                       - RewritePath=/management-service/swagger-resources/?(?<segment>.*), /swagger-resources/$\{segment}
                       - RewritePath=/management-service/v3/api-docs, /v3/api-docs

@@ -16,7 +16,7 @@ public class OrderResponseDto {
     private Long carId;
 
     @Schema(description = "ID of the client who placed the order")
-    private Long clientId;
+    private String clientId;
 
     @Schema(description = "Date when the order was created")
     private Date createdAt;
