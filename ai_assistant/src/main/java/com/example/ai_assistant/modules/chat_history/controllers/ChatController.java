@@ -24,11 +24,14 @@ import com.example.ai_assistant.modules.shared.util.JwtUtil;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.AllArgsConstructor;
 
 @RestController
 @RequestMapping("/conversation")
 @AllArgsConstructor
+@Tag(name = "AI assistant")
+
 public class ChatController {
 
         private final ChatService chatService;

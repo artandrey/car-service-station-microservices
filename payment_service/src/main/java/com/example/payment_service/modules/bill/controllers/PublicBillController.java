@@ -16,10 +16,14 @@ import com.example.payment_service.shared.util.JwtUtil;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
+import io.swagger.v3.oas.annotations.tags.Tag;
+
 import org.springframework.http.MediaType;
 
 @RestController
 @RequestMapping("/public/bills")
+@Tag(name = "Public Bills")
+
 public class PublicBillController {
 
     @Autowired
