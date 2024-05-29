@@ -44,7 +44,8 @@ public class FileUploadServiceTest {
     @Test
     public void testGetFile() {
         byte[] content = "File content".getBytes();
-        FileRecord fileRecord = new FileRecord("test.txt", "text/plain", content.length, content);
+        FileRecord fileRecord = new FileRecord("66578818e23a9651c9e33340", "test.txt", "text/plain",
+                (long) content.length, content);
         when(fileUploadRepository.downloadFile("file-id")).thenReturn(Optional.of(fileRecord));
 
         FileRecord result = fileUploadService.getFile("file-id");
@@ -63,7 +64,9 @@ public class FileUploadServiceTest {
     public void testGetAll() {
         byte[] content = "File content".getBytes();
 
-        List<FileRecord> fileRecords = List.of(new FileRecord("test.txt", "text/plain", content.length, content));
+        List<FileRecord> fileRecords = List
+                .of(new FileRecord("66578818e23a9651c9e33340", "test.txt", "text/plain", (long) content.length,
+                        content));
         when(fileUploadRepository.findAll()).thenReturn(fileRecords);
 
         List<FileRecord> result = fileUploadService.getAll();

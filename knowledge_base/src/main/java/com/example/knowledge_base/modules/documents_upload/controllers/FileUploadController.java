@@ -4,6 +4,8 @@ import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.tags.Tag;
+
 import org.springframework.core.io.ByteArrayResource;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
@@ -23,6 +25,8 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/files")
+@Tag(name = "Files upload")
+
 @AllArgsConstructor
 public class FileUploadController {
     private final IFileUploadService fileUploadService;
@@ -35,7 +39,7 @@ public class FileUploadController {
         return ResponseEntity.ok(fileUploadService.getAll().stream().map(fileRecordMapper::toDto).toList());
     }
 
-    @PostMapping()
+    @PostMapping(consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
     @Operation(summary = "Upload file", description = "Uploads a file")
     @ApiResponse(responseCode = "200", description = "File uploaded successfully")
     @ApiResponse(responseCode = "400", description = "Unsupported file format")

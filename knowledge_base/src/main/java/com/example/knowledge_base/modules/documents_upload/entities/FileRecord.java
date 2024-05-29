@@ -8,8 +8,9 @@ import lombok.NoArgsConstructor;
 @Data
 @NoArgsConstructor
 public class FileRecord {
+    private String fileId;
     private String filePath;
     private String mimeType;
-    private Integer fileSize;
+    private Long fileSize;
     private byte[] fileContent;
 }

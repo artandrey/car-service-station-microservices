@@ -27,5 +27,4 @@ public class GlobalExceptionHandler {
 class ErrorResponse {
     private String errorCode;
     private String message;
-
 }

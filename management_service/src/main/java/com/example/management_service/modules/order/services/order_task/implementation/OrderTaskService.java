@@ -42,10 +42,6 @@ public class OrderTaskService implements IOrderTaskService {
     @Override
     public OrderTask updateOrderTask(Long orderTaskId, OrderTask orderTask) {
         OrderTask orderTaskToUpdate = getOrderTaskById(orderTaskId);
-        System.out.println("old:");
-        orderTaskToUpdate.getAssignedTo().forEach(System.out::println);
-        System.out.println("new: ");
-        orderTask.getAssignedTo().forEach(System.out::println);
         return orderTaskRepository.save(orderTaskMapper.updateFromEntity(orderTask, orderTaskToUpdate));
     }
 

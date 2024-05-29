@@ -19,10 +19,14 @@ import com.example.payment_service.modules.bill.services.bill.implementation.Bil
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
+import io.swagger.v3.oas.annotations.tags.Tag;
+
 import org.springframework.http.MediaType;
 
 @RestController
 @RequestMapping("/bills")
+@Tag(name = "Bills Management")
+
 public class BillController {
 
     @Autowired
