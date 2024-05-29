@@ -19,6 +19,9 @@ public class FileResponseDto {
     @Schema(description = "Size of the uploaded file in bytes", example = "1024")
     private String fileSize;
 
+    @Schema(description = "Id of file", example = "66578818e23a9651c9e33340")
+    private String fileId;
+
     @Schema(description = "Content of the uploaded file as a byte array")
     private byte[] fileContent;
 }

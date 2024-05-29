@@ -31,8 +31,10 @@ public class GridFsDocumentsUploadService implements IDocumentsUploadService {
         String fileId = fileUploadService.addFile(upload);
         String fileContent = fileReader.read(upload);
         List<Document> splittedContent = documentSplitter.split(fileContent);
+
         splittedContent.forEach(document -> {
             Map<String, Object> metadata = document.getMetadata();
+
             metadata.put("fileId", fileId);
         });
 
@@ -42,7 +44,9 @@ public class GridFsDocumentsUploadService implements IDocumentsUploadService {
     }
 
     @Override
+    @Transactional
     public boolean delete(String id) {
+
         return fileUploadService.deleteById(id);
     }
 
